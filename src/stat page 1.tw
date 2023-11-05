@@ -1,0 +1,83 @@
+:: stat page 1 [nobr noreturn edit stat-passage] {"position":"50,800","size":"100,100"}
+<div class="box header">
+<h1>$firstname $lastname</h1>
+<h2>"$nickname"</h2>
+<span class="star">✦</span>
+
+<ul class="facts">
+<li>Female</li>
+<li>26</li>
+<li>Human</li>
+</ul>
+</div>
+
+<div class="box">
+<h3>Appearance</h3>
+<i>Text here. Text here. Text here. Text here. Text here. Text here. Text here. Text here. Text here. Text here. Text here. Text here. </i>
+</div>
+
+<!-- BOX WITH GROUP OF STATS -->
+<div class="box">
+
+<!-- STAT GROUP TITLE -->
+<h3>Personality</h3>
+
+<div class="stat-group">
+<div class="stat">
+<div class="stat-labels">
+<span>Kind 70%</span>
+<span>✦</span>
+<span>Cruel 30%</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar"></div>
+</div>
+</div>
+
+<div class="stat">
+<div class="stat-labels">
+<span>Shy 70%</span>
+<span>✦</span>
+<span>Bold 30%</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar"></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="box">
+<h3>Skills</h3>
+<div class="stat-group">
+<div class="stat">
+<div class="stat-labels">
+<span>Embroidery</span>
+<span>✦</span>
+<span>70%</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar"></div>
+</div>
+</div>
+
+<div class="stat">
+<div class="stat-labels">
+<span>Dancing</span>
+<span>✦</span>
+<span>70%</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar"></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- IMPORTAN! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP -->
+
+<span style="display: block; text-align: center;">
+<<link "« Return to game" $return>><</link>>
+</span>
+
+

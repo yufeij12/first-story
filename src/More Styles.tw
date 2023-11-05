@@ -1,0 +1,38 @@
+:: More Styles {"position":"150,700","size":"100,100"}
+!!! Checkbox:
+<<checkbox "$checkboxVar1" false true autocheck>> Checkbox option 1
+<<checkbox "$checkboxVar2" false true autocheck>> Checkbox option 2
+<<checkbox "$checkboxVar3" false true autocheck>> Checkbox option 3
+
+!!! Cycle:
+<<cycle "$cycleVar" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+	<<option "Option 4">>
+	<<option "Option 5">>
+<</cycle>>
+
+!!! Listbox:
+<<listbox "$listboxVar" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+	<<option "Option 4">>
+	<<option "Option 5">>
+<</listbox>>
+
+!!! Radiobutton:
+<<radiobutton "$radiobuttonVar" "option 1" autocheck>> Option 1
+<<radiobutton "$radiobuttonVar" "option 2" autocheck>> Option 2
+<<radiobutton "$radiobuttonVar" "option 3" autocheck>> Option 3
+
+!!! Textarea:
+<<textarea "$textareaVar" "Type text here..">>
+
+!!! Textbox:
+<<textbox "$textboxVar" "Type answer here">>
+
+<<button "Autosave" "Autosave">><</button>>
+
+

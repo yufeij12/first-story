@@ -1,0 +1,37 @@
+:: Loading Page [loading-page nobr] {"position":"750,25","size":"100,100"}
+<div class="main">
+
+<nav>
+<<link "Resume Game">><<run Save.autosave.load()>><</link>>
+<<link "Load Game">><<run UI.saves();>><</link>>
+</nav>
+
+<div class="story-banner">
+<div class="content">
+
+<!-- STORY TITLE -->
+<h1 class="story-title">Game Title</h1>
+
+<!-- ICON -->
+<i class="fab fa-pagelines"></i>
+
+<!-- STORY SUBTITLE -->
+<h2 class="story-subtitle">Game Subtitle</h2>
+
+<span>✦</span>
+
+<!-- STORY AUTHOR -->
+<h3 class="story-author">By <a href="#"></a>Author</h3>
+
+</div>
+</div>
+
+<nav>
+<<link "New Game" "Chapter I">><</link>>
+<<link "Settings">><<run UI.settings();>><</link>>
+</nav>
+</div>
+
+<div class="credit">✦ Template by <a href="https://outoftheblue-if.tumblr.com" target="_blank">Vahnya</a> ✦</div>
+
+

@@ -1,0 +1,24 @@
+:: story logo [edit nobr] {"position":"350,200","size":"100,100"}
+<!-- STORY BANNER/LOGO POPULATED HERE -->
+
+<div class="story-banner">
+<div class="content">
+
+<!-- STORY TITLE -->
+<h1 class="story-title">Game Title</h1>
+
+<!-- ICON -->
+<i class="fas fa-broom"></i>
+
+<!-- STORY SUBTITLE -->
+<h2 class="story-subtitle">Game Subtitle</h2>
+
+<span>✦</span>
+
+<!-- STORY AUTHOR -->
+<h3 class="story-author">By <a href="#"></a>Author</h3>
+
+</div>
+</div>
+
+

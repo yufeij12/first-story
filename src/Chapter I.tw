@@ -1,0 +1,13 @@
+:: Chapter I {"position":"750,150","size":"100,100"}
+Who am I talking to?
+
+<<link 'Configure your gender and pronouns.'>>
+    <<pronouns>>
+<</link>>
+
+
+Ok, well, let's meet our NPC!
+
+[[Meet NPC]]
+
+

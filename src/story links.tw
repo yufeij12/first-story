@@ -1,0 +1,10 @@
+:: story links [edit nobr] {"position":"50,200","size":"100,100"}
+<!-- POPULATES STORY LINKS IN THE HEADER MENU -->
+
+<li> [[Stats]] </li>
+<<if $hasBook == true>>
+	<li> [[Notebook]] </li>
+<</if>>
+<li> [[Inventory]] </li>
+
+

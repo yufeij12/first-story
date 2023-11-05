@@ -1,0 +1,6 @@
+:: Autosave [autosave] {"position":"250,700","size":"100,100"}
+<<notify>>Autosave complete!<</notify>>
+
+This passage autosaves, and the next time the game opens the player will be able to resume from here.
+
+

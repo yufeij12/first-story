@@ -1,0 +1,97 @@
+:: StoryInterface [don't-edit nobr] {"position":"2,2","size":"100,100"}
+<header>
+<div class="decoration-i">✦</div>
+<div class="decoration-ii">✦</div>
+<div class="decoration-iii">✦</div>
+<div class="decoration-v">✦</div>
+
+<div id="header-top">
+
+<!-- SOCIAL MEDIA ICONS (POPULATED IN THE social media PASSAGE) -->
+<nav class="social-media" data-passage="social media">
+
+</nav>
+
+<div class="middle">
+
+<!-- STORY TITLE ETC. WHEN MENU IS CLOSED -->
+<div class="title" data-passage="story title">
+
+</div>
+
+<!-- OPEN MENU ICON -->
+<span id="menu-toggle">
+<i class="fas fa-chevron-down"></i>
+</span>
+</div>
+
+<!-- SETTINGS, RESTART, SAVE & FULLSCREEN BUTTONS -->
+<nav class="tools">
+<span id="header-settings-button"><i class="fas fa-cog"></i></span>
+<span id="header-restart-button"><i class="fas fa-undo"></i></span>
+<span id="header-saves-button"><i class="fas fa-save"></i></span>
+<span id="header-fullscreen-button"><i class="fas fa-expand-arrows-alt"></i></span>
+</nav>
+
+</div>
+
+<div id="header-body">
+<div class="content">
+
+<!-- SETTINGS, RESTART, SAVE & FULLSCREEN BUTTONS -->
+<nav class="tools">
+<span id="menu-settings-button"><i class="fas fa-cog"></i></span>
+<span id="menu-restart-button"><i class="fas fa-undo"></i></span>
+<span id="menu-saves-button"><i class="fas fa-save"></i></span>
+<span id="menu-fullscreen-button"><i class="fas fa-expand-arrows-alt"></i></span>
+</nav>
+
+<!-- STORY LOGO (POPULATED IN THE story logo PASSAGE) -->
+<div class="logo-image" data-passage="story logo">
+
+</div>
+
+<!-- STORY LINKS (POPULATED IN THE story links PASSAGE) -->
+<ul id="story-menu" data-passage="story links">
+
+</ul>
+
+<!-- SOCIAL MEDIA ICONS (POPULATED IN THE social media PASSAGE) -->
+<div class="social-media" data-passage="social media">
+
+</div>
+</div>
+
+<div class="credit">✦ Template by <a href="https://outoftheblue-if.tumblr.com" target="_blank">Vahnya</a> ✦</div>
+
+</div> <!-- header body end tag -->
+</header>
+
+<div id="main">
+
+<div class="decoration-separator">
+<span>✦</span>
+<span>✦</span>
+<span>✦</span>
+<span>✦</span>
+</div>
+
+<div id="passages">
+</div>
+
+<div class="decoration-separator">
+<span>✦</span>
+<span>✦</span>
+<span>✦</span>
+<span>✦</span>
+</div>
+</div> <!-- #main -->
+
+<footer>
+<!-- BACKWARDS AND FORWARDS BUTTONS, YOU CAN REMOVE THIS IF YOU DON'T WANT THEM IN YOUR STORY -->
+<span id="backwards-button"><i class="fas fa-chevron-left"></i></span>
+<span>✦</span>
+<span id="forwards-button"><i class="fas fa-chevron-right"></i></span>
+</footer>
+
+

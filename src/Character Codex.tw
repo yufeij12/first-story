@@ -1,0 +1,52 @@
+:: Character Codex [noreturn nobr character-codex] {"position":"150,500","size":"100,100"}
+<h1>Character Codex</h1>
+<br><br>
+<div class="container">
+	<div class ="card">
+		<div class="content">
+    		<div class="left">
+        		<div class="avatar">
+            		<span>N</span>
+      			</div>
+             </div>
+        
+        <div class="right">
+        	<h3>NPC</h3>
+              <ul>
+                  <li>Ageless</li>
+                  <li>Human</li>
+                  <li>Female</li>
+              </ul>
+            <<if $npcLove >= 90 >>
+            	<p>The NPC thinks you are amazing!</p>
+            <<elseif $npcLove>= 70 >>
+            	<p>The NPC likes you.</p>
+             <<elseif $npcLove >= 50 >>
+             	<p>The NPC thinks you are mid.</p>
+             <<elseif $npcLove >= 30 >>
+             	<p>The NPC thinks you are okay...</p>
+             <<else>>
+             	<p>The NPC does not like you.</p>
+            <</if>>
+        </div>
+      </div>   
+       <div class="stat">
+        	<div class="stat-labels">
+            	<span>Relationship</span>
+            </div>
+            <div class="stat-bar-container">
+				<div class="stat-bar" id="npcLove"></div>
+			</div>
+        </div>
+
+       
+	</div>
+</div>
+
+
+<br><br>
+<span style="display: block; text-align: center;">
+[[« Return to Notebook|Notebook]]
+</span>
+
+

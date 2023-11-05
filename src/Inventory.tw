@@ -1,0 +1,12 @@
+:: Inventory [noreturn] {"position":"250,350","size":"100,100"}
+<h1>Inventory</h1>
+
+<<if $inventory.length is 0>>\
+	Your inventory is empty!
+<<else>>\
+	<<inv $inventory inspect>>
+<</if>>
+
+<span style="display: block; text-align: center;"><<link "« Return to game" $return>><</link>></span>
+
+

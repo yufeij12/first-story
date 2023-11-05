@@ -1,0 +1,13 @@
+:: story title [nobr edit] {"position":"250,200","size":"100,100"}
+<!-- TITLE ON THE TOP OF THE PAGE IS POPULATED HERE -->
+
+<!-- STORY TITLE -->
+<h1>Game Title</h1>
+
+<!-- ICON -->
+<i class="fab fa-pagelines"></i>
+
+<!-- STORY SUBTITLE -->
+<h2>Game Subtitle</h2>
+
+

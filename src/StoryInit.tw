@@ -1,0 +1,40 @@
+:: StoryInit [nobr] {"position":"225,0","size":"100,100"}
+// FOR SETTING STATS THAT NEED TO BE IN PLAY AT THE START OF THE STORY
+
+
+//MAIN CHARACTER
+<<set $firstname = "Eleanor">>
+<<set $lastname = "Dashwood">>
+<<set $nickname = "Ellie">>
+
+
+//STATS
+<<set $kind = 50>>
+<<set $cruel = 100 - $kind>>
+<<set $shy = 50>>
+<<set $bold =100 - $shy>>
+<<set $chr = 0>>
+<<set $int = 0>>
+<<set $str = 0>>
+<<set $mag = 0>>
+
+//CHARACTERS
+<<set $haveMetNPC == false>>
+
+//RELATIONSHIPS
+<<set $npcLove = 50>>
+
+
+//INVENTORY
+<<newinv $inventory>>
+<<set $hasBook == false>>
+<<set $money = 0>>
+
+//ITEMS
+<<item "book" "Notebook">>
+	<<description>>\
+    	A notebook collecting details of your travels so far.\
+    <<unique>>
+<</item>>
+
+

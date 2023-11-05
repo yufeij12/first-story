@@ -1,0 +1,17 @@
+:: StoryData
+{
+	"ifid": "2AC7FFE6-4787-4918-8961-4466A7EBC28E",
+	"format": "SugarCube",
+	"format-version": "2.36.1",
+	"start": "Loading Page",
+	"tag-colors": {
+		"don't-edit": "red",
+		"edit": "green",
+		"maybe-don't-change": "blue",
+		"ui": "blue",
+		"widget": "red"
+	},
+	"zoom": 1
+}
+
+

@@ -1,0 +1,88 @@
+:: stat page 3 [nobr edit noreturn] {"position":"150,800","size":"100,100"}
+<!-- THIS PASSAGE IS NOT TAGGED WITH STYLE PASSAGE BUT RATHER HAS A FEW ELEMENTS WRAPPED IN THAT CLASS TO ONLY STYLE CERTAIN ELEMENTS -->
+
+<!-- REMOVING CLASS BOX HEADER FROM TITLE TO GET DIFFERENT HEADER -->
+<h1>Title</h1>
+<h2>Subtitle</h2>
+
+<!-- ADDING STAT PASSAGE CLASS TO UL LIST TO KEEP STYLING FOR THIS ELEMENT -->
+<div class="stat-passage">
+<ul class="facts">
+<li>Female</li>
+<li>26</li>
+<li>Human</li>
+</ul>
+</div>
+
+<br><br>
+
+<div class="box blank">
+<h2>Appearance</h2>
+<i>$firstname is tall and of average size with golden blond hair and pale skin.</i>
+</div>
+
+<!-- ADDING STAT PASSAGE CLASS TO KEEP STYLING S-->
+<div class="stat-passage">
+<div class="box blank">
+
+<!-- STAT GROUP TITLE -->
+<h3>Personality</h3>
+
+<div class="stat-group">
+<div class="stat">
+<div class="stat-labels">
+<span>Kind 70%</span>
+<span>✦</span>
+<span>Cruel 30%</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar"></div>
+</div>
+</div>
+
+<div class="stat">
+<div class="stat-labels">
+<span>Shy 70%</span>
+<span>✦</span>
+<span>Bold 30%</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar"></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="box blank">
+<h3>Skills</h3>
+<div class="stat-group">
+<div class="stat">
+<div class="stat-labels">
+<span>Embroidery</span>
+<span>✦</span>
+<span>70%</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar"></div>
+</div>
+</div>
+
+<div class="stat">
+<div class="stat-labels">
+<span>Dancing</span>
+<span>✦</span>
+<span>70%</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- IMPORTAN! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP -->
+
+<span style="display: block; text-align: center;"><<link "« Return to game" $return>><</link>></span>
+
+

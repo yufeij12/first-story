@@ -1,0 +1,108 @@
+:: Stats [nobr noreturn edit stat-passage] {"position":"50,350","size":"100,100"}
+<div class="box header">
+<h1>$firstname $lastname</h1>
+<h2>"$nickname"</h2>
+<span class="star">✦</span>
+
+<ul class="facts">
+<li>Text</li>
+<li>Text</li>
+<li>Text</li>
+</ul>
+</div>
+
+<!-- TEXT BOX BUT WITHOUT BACKGROUND -->
+
+<div class="box blank">
+<h3>Appearance</h3>
+<i>$firstname is tall and of average size with golden blond hair and pale skin.</i>
+</div>
+
+<!-- STAT BOX BUT WITHOUT BACKGROUND -->
+
+<div class="box blank">
+
+<!-- STAT GROUP TITLE -->
+<h3>Personality</h3>
+
+<div class="stat-group">
+	<div class="stat">
+		<div class="stat-labels">
+			<span>Kind $kind%</span>
+			<span>✦</span>
+			<span>Cruel $cruel%</span>
+		</div>
+	<div class="stat-bar-container">
+		<div class="stat-bar" id="kind-stat">
+		</div>
+	</div>
+</div>
+
+<div class="stat">
+	<div class="stat-labels">
+		<span>Shy $shy%</span>
+		<span>✦</span>
+		<span>Bold $bold%</span>
+	</div>
+<div class="stat-bar-container">
+	<div class="stat-bar" id="bold-stat"></div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+<div class="box blank">
+
+<h3>Skills</h3>
+<div class="stat-group">
+	<div class="stat">
+	<div class="stat-labels">
+		<span>Charisma ✦</span>
+		<span>$chr</span>
+	</div>
+	<div class="stat-bar-container">
+		<div class="stat-bar" id="chr-stat"></div>
+	</div>
+</div>
+
+<div class="stat">
+	<div class="stat-labels">
+		<span>Intellect ✦</span>
+		<span>$int</span>
+	</div>
+<div class="stat-bar-container">
+	<div class="stat-bar" id="int-stat"></div>
+	</div>
+</div>
+
+<div class="stat">
+	<div class="stat-labels">
+		<span>Strength ✦</span>
+		<span>$str</span>
+	</div>
+	<div class="stat-bar-container">
+		<div class="stat-bar" id="str-stat"></div>
+	</div>
+</div>
+
+<div class="stat">
+	<div class="stat-labels">
+		<span>Magic ✦</span>
+		<span>$mag</span>
+	</div>
+	<div class="stat-bar-container">
+		<div class="stat-bar" id="mag-stat"></div>
+	</div>
+</div>
+
+</div>
+</div>
+
+
+<!-- IMPORTAN! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP -->
+
+<span style="display: block; text-align: center;"><<link "« Return to game" $return>><</link>></span>
+
+
