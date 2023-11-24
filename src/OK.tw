@@ -1,5 +1,21 @@
 :: OK {"position":"750,400","size":"100,100"}
-Now that you've met this NPC, try picking this item up!
+<<set $theme to "day-theme">>
+
+<<if $hairstyle is "bald">>
+
+	You carress your bald head in exasperation.
+
+<<elseif $hairstyle is "shoulder length">>
+
+	You run your hands through your short locks in annoyance.
+    
+<<elseif $hairstyle is "waist length">>
+
+	You flip your long hair in defiance.
+    
+<</if>>
+
+Now that you've met this NPC, try picking this item up! This will unlock your notebook.
 
 [[Pick up your Notebook.|Has Book]]
 

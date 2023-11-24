@@ -1,0 +1,20 @@
+:: InventoryInit {"position":"350,0","size":"100,100"}
+//INVENTORY INITIALIZATION
+
+<<newinv $inventory>>
+<<set $hasBook == false>>
+<<pickup $inventory "coin" 200>>
+
+//ITEMS
+<<item "book" "Notebook">>
+	<<description>>\
+    	A notebook collecting details of your travels so far.\
+    <<unique>>
+<</item>>
+
+<<item "coin" "Coins">>
+	<<description>>\
+    	The currency that runs the world. You can use it to accomplish all sorts of marvelous things...\
+<</item>>
+
+

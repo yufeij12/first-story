@@ -7,6 +7,8 @@
 	<<inv $inventory inspect>>
 <</if>>
 
-<span style="display: block; text-align: center;"><<link "« Return to game" $return>><</link>></span>
+<span style="display: block; text-align: center;">
+	<<link "« Return to game" $return>><</link>>
+</span>
 
 

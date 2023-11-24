@@ -1,13 +1,54 @@
 :: Chapter I {"position":"750,150","size":"100,100"}
+This is a test.
+
 Who am I talking to?
 
 <<link 'Configure your gender and pronouns.'>>
     <<pronouns>>
 <</link>>
 
+What do I call you?
 
-Ok, well, let's meet our NPC!
+First name: <<textbox "$firstname" " " autofocus>>
+Last name: <<textbox "$lastname" " " >>
 
-[[Meet NPC]]
+<span class="enter"><<button "That's me...">>
+<<if $firstname == " " or $lastname == " ">>
+	<<replace "#name-error">>Please enter a first and last name!<</replace>>
+<<else>>
+    <<replace "#enter-nickname">>
+        Nice to meet you, $firstname $lastname!
+
+        Hmm...that seems a little formal. How do your friends usually address you?
+
+        Nickname: <<textbox "$nickname" " ">>
+
+        <span class="enter"><<button "That's what my friends call me...">>
+        <<if $nickname == $firstname>>
+            <<replace "#nickname-response">>
+            No nickname? I see, $firstname it is!
+
+            Next, let's meet an NPC to unlock the character codex!
+            
+            [[Meet NPC]]
+            <</replace>>
+        <<else>>
+            <<replace "#nickname-response">>
+            That's more like it. Nice to meet you, $nickname!
+
+            Next, let's meet an NPC to unlock the character codex!
+            
+            [[Meet NPC]]
+            <</replace>>
+        <</if>>
+        <</button>></span>
+    <</replace>>
+<</if>>
+<</button>> </span>
+&nbsp;&nbsp; \
+
+<span id="name-error"></span>
+<span id="enter-nickname"></span>
+<span id="nickname-response"></span>
 
 

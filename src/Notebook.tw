@@ -1,22 +1,19 @@
 :: Notebook [noreturn] {"position":"150,350","size":"100,100"}
-<!-- REMOVING CLASS BOX HEADER FROM TITLE TO GET DIFFERENT HEADER -->
 <h1>Notebook</h1>
 <p>A collection from your travels.</p>
 
 <br><br>
 
 <div class="box blank">
-
-<<if $haveMetNPC == true>>
-
-<h2>[[Character Codex]]</h2>
-
-<</if>>
-
+    <<if $haveMetNPC == true>>
+        <h2>[[Character Codex]]</h2>
+    <</if>>
 </div>
 
 
 
-<span style="display: block; text-align: center;"><<link "« Return to game" $return>><</link>></span>
+<span style="display: block; text-align: center;">
+    <<link "« Return to game" $return>><</link>>
+</span>
 
 
