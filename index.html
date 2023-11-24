@@ -98,7 +98,7 @@ var LZString={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://2AC7FFE6-4787-4918-8961-4466A7EBC28E// --><tw-storydata name="STORY-BETA-1" startnode="6" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="2AC7FFE6-4787-4918-8961-4466A7EBC28E" zoom="1" format="SugarCube" format-version="2.36.1" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@charset "UTF-8";
+	<!-- UUID://2AC7FFE6-4787-4918-8961-4466A7EBC28E// --><tw-storydata name="STORY-BETA-1" startnode="8" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="2AC7FFE6-4787-4918-8961-4466A7EBC28E" zoom="1" format="SugarCube" format-version="2.36.1" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@charset "UTF-8";
 
 :root {
   /*--color1: #e56c39;
@@ -107,9 +107,9 @@ var LZString={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234
   --color1: #94bbe9;
   --color2: #9793c8;
   --color3: #eeaeca;
-  /*--color1: #771035;
-  --color2: #b84c71;
-  --color3: #d578a0;*/
+  --color4: #771035;
+  --color5: #b84c71;
+  --color6: #d578a0;
   --white: #eee;
   --black: #111;
   --titlefont: "NewYork";
@@ -234,6 +234,10 @@ button {
   transition: all 0.3s ease;
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
+  background-color: var(--white);
+  padding: 3px;
+  color: var(--color1);
+  border: 1px solid var(--color2);
 }
 
 ul {
@@ -659,6 +663,11 @@ footer i:hover {
 #passages .link-internal.macro-button:hover {
   outline: 1px solid var(--white);
   outline-offset: -5px;
+}
+
+#passages .enter .link-internal.macro-button {
+  width: fit-content;
+  display: block;
 }
 
 .passage {
@@ -1244,9 +1253,6 @@ ul.simple-inventory-list{
   display:grid;
   grid-template-columns:1fr 1fr 1fr 1fr 1fr
 }
-.simple-inventory-listing:nth-child(2n){
-  background-color:#000;
-}
 .simple-inventory-listing>a,
 .simple-inventory-listing>span{
   display:inline-block
@@ -1264,7 +1270,22 @@ ul.simple-inventory-list{
 .drop-link:hover{
   color:#f88;
 }
-/* End Simple Inventory */</style><script role="script" id="twine-user-script" type="text/twine-javascript">// TO AUTOSAVE ON PASSAGES TAGGED "BOOKMARK" OR "AUTOSAVE" FOR THE "RESUME GAME" FEATURE ON LOAD SCREEN
+/* End Simple Inventory */
+
+/*Click to Proceed*/
+.--macro-ctp-hidden {
+	display: none;
+}
+
+.--macro-ctp-t8n {
+	animation: macro-ctp-t8n 400ms ease-in;
+}
+
+@keyframes macro-ctp-t8n {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+/*End Click to Proceed*/</style><script role="script" id="twine-user-script" type="text/twine-javascript">// TO AUTOSAVE ON PASSAGES TAGGED "BOOKMARK" OR "AUTOSAVE" FOR THE "RESUME GAME" FEATURE ON LOAD SCREEN
 Config.saves.autosave = ["bookmark", "autosave"];
 
 // THIS IS WHERE YOU IMPORT YOUR OWN FONTAWESOME KIT URL
@@ -1335,6 +1356,24 @@ $(document).on(":passagestart", function() {
 		/* If it doesn't, then set $return to the current passage name. */
 		State.variables.return = passage();
 	}
+});
+
+/*THEME FOR NIGHT AND DAY */
+
+$(document).on(":passagedisplay", function(){
+    var theme = State.getVar("$theme");
+
+    if (theme == "day-theme") {
+        $(':root').css({
+            "--color1": "#94bbe9",
+            "--color2": "#9793c8",
+            "--color3": "#eeaeca"})
+    } else if (theme == "night-theme"){
+         $(':root').css({
+            "--color1": "#771035",
+            "--color2": "#b84c71",
+            "--color3": "#d578a0"})           
+    }
 });
 
 /*STAT BAR DATA*/
@@ -1525,7 +1564,7 @@ Setting.addList("theme", {
     // the point-replace id
     var settingID = '#setting-control-' + config.name;
 
-    // preset pornoun map
+    // preset pronoun map
     var genderMap = {
         subjective : ['she', 'he', 'they'],
         objective : ['her', 'him', 'them'],
@@ -1725,7 +1764,7 @@ Setting.addList("theme", {
         $(document).on(':dialogopen :dialogopened', function () {
             if ($('#ui-dialog-body').hasClass('settings')) {
                 $(settingID).parent('div').empty().append( $(document.createElement('button'))
-                    .append('Configure...')
+                    .append('Adjust')
                     .ariaClick( function () {
                         handleGender();
                     })
@@ -1887,18 +1926,232 @@ Setting.addList("theme", {
 // Simple Inventory, for SugarCube 2, by Chapel
 // v3.0.0-beta1, 2022-07-25, 19f255d958852e55a8a3afcde5c53331f0d938e8
 ;"use strict";function _typeof(t){return _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},_typeof(t)}function _classCallCheck(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function _defineProperties(t,e){for(var n=0;n<e.length;n++){var i=e[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(t,i.key,i)}}function _createClass(t,e,n){return e&&_defineProperties(t.prototype,e),n&&_defineProperties(t,n),Object.defineProperty(t,"prototype",{writable:!1}),t}!function(){var t={description:"",handler:null,displayName:"",consumable:!0,unique:!1,permanent:!1},e=new Map,n=function(){function n(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"",i=arguments.length>1&&void 0!==arguments[1]?arguments[1]:clone(t),r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:[];if(_classCallCheck(this,n),!e||"string"!=typeof e)throw new Error("invalid item ID");if("object"!==_typeof(i))throw new Error("invalid item definition");Object.assign(this,Object.assign(t,i)),this.id=e,this.tags=r instanceof Array?r:"string"==typeof r?[r]:[]}return _createClass(n,[{key:"name",get:function(){return this.displayName||this.id},set:function(t){this.displayName=t}},{key:"use",value:function(){return"string"==typeof this.handler?$.wiki(this.handler):"function"==typeof this.handler&&this.handler(this),this}},{key:"inspect",value:function(){return Dialog.setup(this.name,"simple-inventory item-description"),Dialog.wiki(this.description),Dialog.open(),this}}],[{key:"is",value:function(t){return t instanceof n}},{key:"add",value:function(t,i,r){var a=new n(t,i,r);return e.set(t,a),a}},{key:"get",value:function(t){return e.get(t)}},{key:"has",value:function(t){return e.has(t)}},{key:"list",get:function(){return e}}]),n}();setup.Item=n,window.Item=window.Item||n}(),function(){var t=setup.Item,e=!1,n="&hellip;",i={inspect:"Inspect",use:"Use",drop:"Drop",stack:"stack",take:"Take",give:"Give",stackPre:"&nbsp;&times;&nbsp;",stackPost:"&nbsp;"},r={};function a(e){return t.has(e)&&t.get(e).unique}function s(e){return t.has(e)&&t.get(e).permanent}function o(t){return t&&"string"==typeof t&&t.trim()}var u=function(){function u(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:[];_classCallCheck(this,u),this.data=clone(t),this.tags=e instanceof Array?e:"string"==typeof e?[e]:[]}return _createClass(u,[{key:"emit",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return u.emit(t,this,e),this}},{key:"array",get:function(){var t=this,e=[];return Object.keys(this.data).forEach((function(n){if(e.push(n),t.data[n]>1)for(var i=1;i<t.data[n];i++)e.push(n)})),e}},{key:"list",get:function(){return Object.keys(this.data)}},{key:"length",get:function(){return this.array.length}},{key:"uniqueLength",get:function(){return this.list.length}},{key:"table",get:function(){return this.data}},{key:"count",value:function(t){return t?this.data[t]||0:this.length}},{key:"has",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:1;return this.data[t]>=e}},{key:"hasAll",value:function(){var t=this,e=[].slice.call(arguments).flat(1/0);return e.every((function(e){return t.has(e)}))}},{key:"hasAny",value:function(){var t=this,e=[].slice.call(arguments).flat(1/0);return e.some((function(e){return t.has(e)}))}},{key:"compare",value:function(t){var e=this,n=u.itemset(t);return Object.keys(n).every((function(t){return e.has(t,n[t])}))}},{key:"merge",value:function(t){var e=this,n=u.itemset(t);return Object.keys(n).forEach((function(t){u.change(e,t,n[t])})),n}},{key:"unmerge",value:function(t){var e=this,n={},i=u.itemset(t);return Object.keys(i).forEach((function(t){e.has(t,i[t])?n[t]=i[t]:e.has(t)&&(n[t]=e.count(t)),u.change(e,t,i[t],!0)})),n}},{key:"pickup",value:function(){var t=this.merge(u.parseArgList.apply(null,arguments));return this.emit("update",{delta:t}),this}},{key:"drop",value:function(){var t=this.unmerge(u.parseArgList.apply(null,arguments));return this.emit("update",{delta:t}),this}},{key:"empty",value:function(){var t=clone(this.data);return this.data={},this.emit("update",{delta:t}),this}},{key:"transfer",value:function(t){var e=u.parseArgList.apply(null,[].slice.call(arguments).slice(1));if(!u.is(t))throw new TypeError("target inventory is not an inventory instance");var n=this.unmerge(e);return t.merge(n),this.emit("update",{target:t,delta:n}),this}},{key:"isEmpty",value:function(){return 0===this.length}},{key:"iterate",value:function(t){var e=this;return"function"!=typeof t||this.list.forEach((function(n){t(n,e.data[n])})),this}},{key:"use",value:function(e){if(t.has(e)){var n=t.get(e);if(n.use(),n.consumable){u.change(this,e,1,!0);var i={};i[e]=1,this.emit("update",{delta:i})}return this.emit("use",{item:n}),this}}},{key:"clone",value:function(){return new u(this.data||{},this.tags||[])}},{key:"toJSON",value:function(){return JSON.reviveWrapper("new setup.Inventory("+JSON.stringify(this.data)+", "+JSON.stringify(this.tags)+")")}}],[{key:"confirm",get:function(){return e},set:function(t){e="string"==typeof t&&"all"===t.trim().toLowerCase()?"all":"string"==typeof t&&"stack"===t.trim().toLowerCase()?"stack":!!t}},{key:"emptyMessage",get:function(){return n},set:function(t){"string"==typeof t&&(n=t)}},{key:"strings",get:function(){return Object.assign(clone(i),r)},set:function(t){"object"===_typeof(t)&&(r=Object.assign(r,clone(t)))}},{key:"change",value:function(t,e){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:1,i=arguments.length>3&&void 0!==arguments[3]&&arguments[3];if(0!==n){if(t instanceof u&&(t=t.data),"object"!==_typeof(t)){if(t)throw new TypeError("cannot access inventory data");t={}}if(!o(e))throw new TypeError("invalid item name/id");if("number"==typeof n&&!Number.isNaN(n)&&Number.isInteger(n)||(n=1),i&&(n*=-1),n>0){if(Object.keys(t).includes(e)&&a(e))return;Object.keys(t).includes(e)||(t[e]=0),t[e]+=n}else{if(s(e))return;Object.keys(t).includes(e)&&"number"==typeof t[e]&&(t[e]+=n),t[e]<=0&&delete t[e]}return t}}},{key:"itemset",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};if(u.is(t)&&(t=t.data),"object"!==_typeof(t))return{};var e={};return Object.keys(t).forEach((function(n){"number"==typeof t[n]&&Number.isInteger(t[n])&&0!==t[n]&&(e[n]=t[n])})),e}},{key:"parseArgList",value:function(){var t=[].slice.call(arguments).flat(1/0);if(t.length%2!=0)throw new Error("item sets should be pairs of item IDs and numbers");var e={};return t.forEach((function(n,i){i%2==0&&(e[n]=t[i+1])})),e}},{key:"is",value:function(t){return t instanceof u}},{key:"emit",value:function(t,e){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{};$(document).trigger(Object.assign({type:":inventory-"+t+".simple-inventory",inventory:e,target:null,delta:{},item:null},n))}},{key:"create",value:function(t,e){return new u(t,e)}}]),u}();setup.Inventory=u,window.Inventory=window.Inventory||u}(),function(){var t=setup.Item,e=setup.Inventory;function n(e){return t.has(e)&&t.get(e).permanent}function i(t){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null,i=arguments.length>2&&void 0!==arguments[2]&&arguments[2],r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:"Alert",a=arguments.length>4&&void 0!==arguments[4]?arguments[4]:"Are you sure?";if(!t||"function"!=typeof t)throw new Error("Invalid confirmation callback!");if(e.confirm)if("all"!==e.confirm||"all"===i)if("stack"!==e.confirm||i){var s={display:"inline-block",float:"right"},o=$(document.createElement("div")),u=$(document.createElement("p")).append(a),l=$(document.createElement("div")).addClass("confirmation-buttons"),c=$(document.createElement("button")).append("Okay").addClass("confirm-yes").css(Object.assign(s,{"margin-right":"0.5rem"})),d=$(document.createElement("button")).append("Cancel").addClass("confirm-no").css(s);t&&"function"==typeof t&&c.ariaClick(t),n&&"function"==typeof n&&d.ariaClick(n),l.append(d,c),o.append(u,l),Dialog.setup(r,"simple-inventory confirmation"),Dialog.append(o),Dialog.open()}else t();else t();else t()}function r(t){var e=$(document.createElement("span")).addClass("spacer");return t&&e.wiki(""+t),e}function a(n,i,r){var a=arguments.length>3&&void 0!==arguments[3]&&arguments[3];return r=r||e.strings.inspect,$(document.createElement(a?"button":"a")).addClass("inspect-link").wiki(""+r).ariaClick((function(){t.get(i).inspect()}))}function s(t,n,i){var r=arguments.length>3&&void 0!==arguments[3]&&arguments[3];return i=i||e.strings.use,$(document.createElement(r?"button":"a")).addClass("use-link").wiki(""+i).ariaClick((function(){t.use(n)}))}function o(t,n,r){var a=arguments.length>3&&void 0!==arguments[3]&&arguments[3],s=arguments.length>4&&void 0!==arguments[4]?arguments[4]:null;return r=r||(s?e.strings.give:e.strings.drop),$(document.createElement(a?"button":"a")).addClass("drop-link").wiki(""+r).ariaClick((function(){i((function(){s&&e.is(s)?t.transfer(s,n,1):t.drop(n,1),Dialog.close()}),(function(){Dialog.close()}))}))}function u(t,n,r){var a=arguments.length>3&&void 0!==arguments[3]&&arguments[3],s=arguments.length>4&&void 0!==arguments[4]?arguments[4]:null;return r=r||(s?e.strings.give:e.strings.drop)+"&nbsp;"+e.strings.stack,$(document.createElement(a?"button":"a")).addClass("stack-link drop-link").wiki(""+r).ariaClick((function(){i((function(){s&&e.is(s)?t.transfer(s,n,t.count(n)):t.drop(n,t.count(n)),Dialog.close()}),(function(){Dialog.close()}))}))}function l(t,n){var r=arguments.length>2&&void 0!==arguments[2]&&arguments[2],a=arguments.length>3&&void 0!==arguments[3]?arguments[3]:null;return n=n||(a?e.strings.give:e.strings.drop),$(document.createElement(r?"button":"a")).addClass("all-link drop-link").wiki(n+" all").ariaClick((function(){t.isEmpty()||i((function(){a&&e.is(a)?(a.merge(t),t.empty()):t.empty(),Dialog.close()}),(function(){Dialog.close()}),!0)}))}function c(t,n,i,r){return i=i||e.strings.stackPre,r=r||e.strings.stackPost,$(document.createElement("span")).addClass("item-count").append(""+i+(t.count(n)||0)+r)}function d(i){var d,f=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{description:!0,use:!0,transfer:null,drop:!0,all:!0,stack:!0,dropActionText:"",classes:""},p=$(document.createElement("ul")).addClass("simple-inventory-list");if(i.length){if(d=i.list.map((function(l){var d=[];return f.description&&t.has(l)&&t.get(l).description?d.push(a(i,l,t.has(l)?t.get(l).name:l)):d.push($(document.createElement("span")).append(t.has(l)?t.get(l).name:l).addClass("item-name")),d.push(c(i,l)),f.use&&t.has(l)&&t.get(l).handler?d.push(s(i,l)):d.push(r()),(f.transfer&&e.is(f.transfer)||f.drop)&&!n(l)?(d.push(o(i,l,f.dropActionText,!1,f.transfer||null)),i.count(l)>1&&f.stack?d.push(u(i,l,f.dropActionText+"&nbsp;"+e.strings.stack,!1,f.transfer||null)):d.push(r())):d.push(r()),$(document.createElement("li")).append(d).addClass("simple-inventory-listing")})),f.all){var h=$(document.createElement("li")).addClass("all-listing simple-inventory-listing").append([r("&mdash;"),r(),r(),l(i,f.dropActionText,!1,f.transfer||null)]);d.push(h)}}else d=$(document.createElement("li")).addClass("simple-inventory-listing").append($(document.createElement("span")).wiki(e.emptyMessage));return p.append(d),p}e.prototype.interface=function(){var t,e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null,i=this,r=$(document.createElement("div")).addClass("simple-inventory-wrapper");return r.append(d(this,e)),$(document).on(":inventory-update.simple-inventory.gui-built-in",(function(){r.length?r.empty().append(d(i,e)):$(document).off(":inventory-update.simple-inventory.gui-built-in")})),n&&n instanceof $?t=n:n&&(t=$(n)),t&&r.appendTo(t),r}}(),function(){setup.Inventory,setup.Item;var t=".simple-inventory-userland",e=":inventory-update.simple-inventory"+t,n=":inventory-use.simple-inventory"+t;function i(t){return t&&"function"==typeof t}Object.assign(setup.Inventory,{events:{update:{on:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null,n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"";i(t)&&$(document).on(e+n,t)},one:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null,n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"";i(t)&&$(document).one(e+n,t)},off:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"";$(document).off(e+t)}},use:{on:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"";i(t)&&$(document).on(n+e,t)},one:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"";i(t)&&$(document).one(n+e,t)},off:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"";$(document).off(n+t)}}}})}(),function(){var t=function(t){if(!Story.has(t))return{};var e,n,i,r,a=(e=Story.get(t).text,i=function(t){return t.replace(/\r+/g,"\n").replace(/\n+/,"\n").replace(/ +/g," ").trim().split(/\n/g)}(e),r={},i.forEach((function(t){var e=function(t,e){return e=e||":",t.trim().split(e)}(t,n);r[e[0].trim()]=e[1].trim()})),r);return a}("inventory.strings");t.empty&&"string"==typeof t.empty&&t.empty.trim()&&(setup.Inventory.emptyMessage=t.empty,delete t.empty),setup.Inventory.strings=t||{}}(),function(){var t=setup.Item,e=setup.Inventory;function n(t){return t&&"string"==typeof t&&t.length>2&&("$"===t[0]||"_"===t[0])}function i(t){if(n(t)&&(t=State.getVar(t)),e.is(t))return t}Macro.add(["item","consumable"],{tags:["description","tags","unique","permanent"],handler:function(){var e,n,i,r,a=null,s=!1,o=!1,u=!1;if(State.length>0)return this.error("items must be defined in `StoryInit` or story JavaScript!");if(!this.args[0]||"string"!=typeof this.args[0]||!this.args[0].trim())return this.error("invalid item ID");if(e=this.args[0].trim(),"consumable"===this.name&&(a=this.payload[0].contents||null,s=!0),this.args[1]&&(n=this.args[1]),this.payload.length>1){var l=this.payload.find((function(t){return"description"===t.name})),c=this.payload.find((function(t){return"tags"===t.name})),d=this.payload.find((function(t){return"unique"===t.name})),f=this.payload.find((function(t){return"permanent"===t.name}));l&&(i=l.contents.trim()),c&&(r=c.args.flat(1/0)),d&&(o=!0),f&&(u=!0)}t.add(e,{displayName:n||"",description:i||"",handler:a,consumable:s,unique:o,permanent:u},r)}}),Macro.add("newinv",{handler:function(){var t=this.args.raw.trim().split(" ").first().replace(/["']/g,"").trim();if(!n(t))return this.error("argument must be a story or temporary variable!");State.setVar(t,new e({},this.args.flat(1/0).slice(1)))}}),Macro.add(["pickup","drop"],{handler:function(){var t=i(this.args[0]);return t?this.args.length<3?this.error("no items to pick up were provided"):void t[this.name](this.args.slice(1)):this.error("first argument must be a valid inventory!")}}),Macro.add("dropall",{handler:function(){var t=i(this.args[0]);if(!t)return this.error("first argument must be a valid inventory!");t.empty()}}),Macro.add(["transfer","merge","unmerge"],{handler:function(){var t=i(this.args[0]);if(!t)return this.error("first argument must be a valid inventory!");var e=i(this.args[1]);if(!e)return this.error("second argument must be a valid inventory!");if("transfer"===this.name){if(this.args.length<4)return this.error("no items to transfer were provided");t.transfer(e,this.args.slice(2))}else t[this.name](e)}}),Macro.add(["inv","take","give"],{handler:function(){var t=null,n=i(this.args[0]);if(!n)return this.error("first argument must be a valid inventory!");this.args[1]&&i(this.args[1])&&(t=i(this.args[1]));var r={description:this.args.includesAny("inspect","description"),use:this.args.includes("use"),transfer:t,drop:this.args.includes("drop"),all:this.args.includes("all"),stack:this.args.includes("stack"),dropActionText:"inv"===this.name?"Drop":e.strings[this.name.trim().toLowerCase()],classes:"macro-".concat(this.name)};n.interface(r,$(this.output))}})}(),function(){var t=setup.Item,e=setup.Inventory;function n(t,e,n){if("object"!==_typeof(e))throw new TypeError("the extension should be a plain generic object holding the properties and methods you want to add");Object.keys(e).forEach((function(i){if(t[i]&&!n)throw new Error('Cannot override existing property "'+i+'"!');t[i]=e[i]}))}Object.assign(e,{extend:function(t){var i=arguments.length>1&&void 0!==arguments[1]&&arguments[1];n(e,t,i)},extendPrototype:function(t){var i=arguments.length>1&&void 0!==arguments[1]&&arguments[1];n(e.prototype,t,i)}}),Object.assign(t,{extend:function(e){var i=arguments.length>1&&void 0!==arguments[1]&&arguments[1];n(t,e,i)},extendPrototype:function(e){var i=arguments.length>1&&void 0!==arguments[1]&&arguments[1];n(t.prototype,e,i)}})}();
-// End Simple Inventory</script><tw-tag name="don't-edit" color="red"></tw-tag><tw-tag name="edit" color="green"></tw-tag><tw-tag name="maybe-don't-change" color="blue"></tw-tag><tw-tag name="ui" color="blue"></tw-tag><tw-tag name="widget" color="red"></tw-tag><tw-passagedata pid="1" name="Autosave" tags="autosave" position="250,700" size="100,100">&lt;&lt;notify&gt;&gt;Autosave complete!&lt;&lt;/notify&gt;&gt;
+// End Simple Inventory
 
-This passage autosaves, and the next time the game opens the player will be able to resume from here.</tw-passagedata><tw-passagedata pid="2" name="Chapter I" tags="" position="750,150" size="100,100">Who am I talking to?
+//Click to Proceed
+
+(function () {
+	"use strict";
+
+	$(document).on(":passageinit", () => {
+		CTP.Logs.forEach((_, id) => {
+			if (!CTP.Repository.get(id)?.persist) CTP.Logs.delete(id);
+		});
+		CTP.Repository.forEach(({ persist }, id) => {
+			if (!persist) CTP.Repository.delete(id);
+		});
+	});
+
+	window.CTP = class CTP {
+		constructor(id, persist = false) {
+			this.stack = [];
+			this.clears = [];
+			this.options = {};
+			if (!id?.trim()) throw new Error(`No ID specified!`);
+			this.id = id;
+			this.persist = persist;
+			CTP.Repository.set(id, this);
+		}
+
+		static get Repository() {
+			if (!setup["@CTP/Repository"]) setup["@CTP/Repository"] = new Map();
+			return setup["@CTP/Repository"];
+		}
+
+		static get Logs() {
+			if (!variables()["@CTP/Logs"]) variables()["@CTP/Logs"] = new Map();
+			return variables()["@CTP/Logs"];
+		}
+
+		get log() {
+			if (!CTP.Logs.get(this.id)) CTP.Logs.set(this.id, { lastClear: -1, index: -1, seen: -1 });
+			return CTP.Logs.get(this.id);
+		}
+
+		static getCTP(id) {
+			return CTP.Repository.get(id);
+		}
+
+		add(content, options = {}) {
+			options = {
+				...this.options,
+				...options
+			};
+			if (options.clear) this.clears.push(this.stack.length);
+			this.stack.push({
+				options, content,
+				index: this.stack.length,
+				element: $()
+			});
+			return this;
+		}
+
+		print(index) {
+			const { content, options: iOpts } = this.stack[index];
+			const options = {
+				...this.options,
+				...iOpts
+			};
+			const element = $(document.createElement(options.element || "span"))
+				.addClass("--macro-ctp-hidden")
+				.attr({
+					"data-macro-ctp-id": this.id,
+					"data-macro-ctp-index": index,
+				})
+				.on("update-internal.macro-ctp", (event, firstTime) => {
+					if ($(event.target).is(element)) {
+						if (index === this.log.index) {
+							if (firstTime) {
+								if (typeof content === "string") element.wiki(content);
+								else element.append(content);
+								element.addClass(options.transition ? "--macro-ctp-t8n" : "");
+							}
+							element.removeClass("--macro-ctp-hidden");
+						} else {
+							if (index < this.log.seen) element.removeClass("--macro-ctp-t8n");
+							element.toggleClass("--macro-ctp-hidden", index > this.log.index || index < this.log.lastClear);
+						}
+					}
+				});
+			this.stack[index].element = element;
+			return element;
+		}
+
+		output() {
+			const wrapper = document.createDocumentFragment();
+			for (let i = 0; i < this.stack.length; i++) {
+				this.print(i).appendTo(wrapper);
+			}
+			return wrapper;
+		}
+
+		advance() {
+			if (this.log.index < this.stack.length - 1) {
+				this.log.index++;
+				const firstTime = this.log.index > this.log.seen;
+				this.log.seen = Math.max(this.log.seen, this.log.index);
+				this.log.lastClear = this.clears.slice().reverse().find(el => el <= this.log.index) ?? -1;
+				$(document).trigger("update.macro-ctp", ["advance", this.id, this.log.index]);
+				this.stack.forEach(({ element }) => element.trigger("update-internal.macro-ctp", [firstTime, "advance", this.id, this.log.index]));
+			}
+			return this;
+		}
+
+		back() {
+			if (this.log.index > 0) {
+				this.log.index--;
+				this.log.lastClear = this.clears.slice().reverse().find(el => el <= this.log.index) ?? -1;
+				$(document).trigger("update.macro-ctp", ["back", this.id, this.log.index]);
+				this.stack.forEach(({ element }) => element.trigger("update-internal.macro-ctp", [false, "back", this.id, this.log.index]));
+			}
+			return this;
+		}
+	}
+
+	Macro.add("ctp", {
+		tags: ["ctpNext"],
+		handler() {
+			const id = this.args[0];
+			const persist = this.args.slice(1).includes("persist");
+			const ctp = new CTP(id, persist);
+			const _passage = passage();
+			this.payload.forEach(({ args, name, contents }) => {
+				const options = {};
+				if (args.includes("clear")) options.clear = true;
+				if (args.includesAny("t8n", "transition")) options.transition = true;
+				const elementArg = (args.find((el) => el.startsWith("element:")) ?? "");
+				if (elementArg) options.element = elementArg.replace("element:", "");
+				if (name === "ctp") ctp.options = { ...options };
+				ctp.add(contents, options);
+			});
+			$(this.output).append(ctp.output());
+			$(document).one(":passagedisplay", () => {
+				if (_passage === passage()) {
+					const i = Math.max(ctp.log.index, 0);
+					ctp.log.index = -1;
+					ctp.log.seen = -1;
+					while (ctp.log.index < i) ctp.advance();
+				}
+			});
+		}
+	});
+
+	Macro.add("ctpAdvance", {
+		handler() {
+			const id = this.args[0];
+			if (id) {
+				const ctp = CTP.getCTP(id);
+				if (ctp) ctp.advance();
+				else throw new Error(`No CTP with ID '${id}' found!`);
+			} else throw new Error(`No ID specified!`);
+		}
+	});
+
+	Macro.add("ctpBack", {
+		handler() {
+			const id = this.args[0];
+			if (id) {
+				const ctp = CTP.getCTP(id);
+				if (ctp) ctp.back();
+				else throw new Error(`No CTP with ID '${id}' found!`);
+			} else throw new Error(`No ID specified!`);
+		}
+	});
+})();
+
+//End Click to Proceed</script><tw-tag name="don't-edit" color="red"></tw-tag><tw-tag name="edit" color="green"></tw-tag><tw-tag name="maybe-don't-change" color="blue"></tw-tag><tw-tag name="ui" color="blue"></tw-tag><tw-tag name="widget" color="red"></tw-tag><tw-passagedata pid="1" name="Autosave" tags="autosave" position="250,700" size="100,100">&lt;&lt;notify&gt;&gt;Autosave complete!&lt;&lt;/notify&gt;&gt;
+
+This passage autosaves, and the next time the game opens the player will be able to resume from here.</tw-passagedata><tw-passagedata pid="2" name="Chapter I" tags="" position="750,150" size="100,100">This is a test.
+
+Who am I talking to?
 
 &lt;&lt;link &#39;Configure your gender and pronouns.&#39;&gt;&gt;
     &lt;&lt;pronouns&gt;&gt;
 &lt;&lt;/link&gt;&gt;
 
+What do I call you?
 
-Ok, well, let&#39;s meet our NPC!
+First name: &lt;&lt;textbox &quot;$firstname&quot; &quot; &quot; autofocus&gt;&gt;
+Last name: &lt;&lt;textbox &quot;$lastname&quot; &quot; &quot; &gt;&gt;
 
-[[Meet NPC]]</tw-passagedata><tw-passagedata pid="3" name="Character Codex" tags="noreturn nobr character-codex" position="150,500" size="100,100">&lt;h1&gt;Character Codex&lt;/h1&gt;
+&lt;span class=&quot;enter&quot;&gt;&lt;&lt;button &quot;That&#39;s me...&quot;&gt;&gt;
+&lt;&lt;if $firstname == &quot; &quot; or $lastname == &quot; &quot;&gt;&gt;
+	&lt;&lt;replace &quot;#name-error&quot;&gt;&gt;Please enter a first and last name!&lt;&lt;/replace&gt;&gt;
+&lt;&lt;else&gt;&gt;
+    &lt;&lt;replace &quot;#enter-nickname&quot;&gt;&gt;
+        Nice to meet you, $firstname $lastname!
+
+        Hmm...that seems a little formal. How do your friends usually address you?
+
+        Nickname: &lt;&lt;textbox &quot;$nickname&quot; &quot; &quot;&gt;&gt;
+
+        &lt;span class=&quot;enter&quot;&gt;&lt;&lt;button &quot;That&#39;s what my friends call me...&quot;&gt;&gt;
+        &lt;&lt;if $nickname == $firstname&gt;&gt;
+            &lt;&lt;replace &quot;#nickname-response&quot;&gt;&gt;
+            No nickname? I see, $firstname it is!
+
+            Next, let&#39;s meet an NPC to unlock the character codex!
+            
+            [[Meet NPC]]
+            &lt;&lt;/replace&gt;&gt;
+        &lt;&lt;else&gt;&gt;
+            &lt;&lt;replace &quot;#nickname-response&quot;&gt;&gt;
+            That&#39;s more like it. Nice to meet you, $nickname!
+
+            Next, let&#39;s meet an NPC to unlock the character codex!
+            
+            [[Meet NPC]]
+            &lt;&lt;/replace&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/button&gt;&gt;&lt;/span&gt;
+    &lt;&lt;/replace&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/button&gt;&gt; &lt;/span&gt;
+&amp;nbsp;&amp;nbsp; \
+
+&lt;span id=&quot;name-error&quot;&gt;&lt;/span&gt;
+&lt;span id=&quot;enter-nickname&quot;&gt;&lt;/span&gt;
+&lt;span id=&quot;nickname-response&quot;&gt;&lt;/span&gt;</tw-passagedata><tw-passagedata pid="3" name="Character Codex" tags="noreturn nobr character-codex" position="150,500" size="100,100">&lt;h1&gt;Character Codex&lt;/h1&gt;
 &lt;br&gt;&lt;br&gt;
 &lt;div class=&quot;container&quot;&gt;
 	&lt;div class =&quot;card&quot;&gt;
@@ -1946,11 +2199,22 @@ Ok, well, let&#39;s meet our NPC!
 &lt;br&gt;&lt;br&gt;
 &lt;span style=&quot;display: block; text-align: center;&quot;&gt;
 [[« Return to Notebook|Notebook]]
-&lt;/span&gt;</tw-passagedata><tw-passagedata pid="4" name="Has Book" tags="" position="750,525" size="100,100">&lt;&lt;set $hasBook to true&gt;&gt;
+&lt;/span&gt;</tw-passagedata><tw-passagedata pid="4" name="ChoiceInit" tags="" position="350,100" size="100,100">&lt;&lt;set $c1_2 = 1&gt;&gt;</tw-passagedata><tw-passagedata pid="5" name="Has Book" tags="" position="750,525" size="100,100">&lt;&lt;set $hasBook to true&gt;&gt;
 &lt;&lt;pickup $inventory &quot;book&quot; 1&gt;&gt;
 &lt;&lt;notify 3s&gt;&gt;Notebook unlocked!&lt;&lt;/notify&gt;&gt;
 
-Now that you&#39;ve picked up your notebook, you can do...</tw-passagedata><tw-passagedata pid="5" name="Inventory" tags="noreturn" position="250,350" size="100,100">&lt;h1&gt;Inventory&lt;/h1&gt;
+You can now access the notebook via the top menu.
+
+&lt;&lt;set $int to $int +5&gt;&gt;
+
+Your intelligence has now increased!
+
+
+[[I&#39;ve been a lover of writing since youth, spending many hours scribbling into my notebook.|prol-5][$c1_2 to 1]]
+
+[[I don&#39;t really like writing, but notebooks are so useful for recording my thoughts...|prol-5][$c1_2 to 2]]
+
+[[I have a notebook? Right...totally forgot about that. Maybe I should actually use it...|prol-5][$c1_2 to 3]]</tw-passagedata><tw-passagedata pid="6" name="Inventory" tags="noreturn" position="250,350" size="100,100">&lt;h1&gt;Inventory&lt;/h1&gt;
 
 &lt;&lt;if $inventory.length is 0&gt;&gt;\
 	Your inventory is empty!
@@ -1958,7 +2222,25 @@ Now that you&#39;ve picked up your notebook, you can do...</tw-passagedata><tw-p
 	&lt;&lt;inv $inventory inspect&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
-&lt;span style=&quot;display: block; text-align: center;&quot;&gt;&lt;&lt;link &quot;« Return to game&quot; $return&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;</tw-passagedata><tw-passagedata pid="6" name="Loading Page" tags="loading-page nobr" position="750,25" size="100,100">&lt;div class=&quot;main&quot;&gt;
+&lt;span style=&quot;display: block; text-align: center;&quot;&gt;
+	&lt;&lt;link &quot;« Return to game&quot; $return&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;/span&gt;</tw-passagedata><tw-passagedata pid="7" name="InventoryInit" tags="" position="350,0" size="100,100">//INVENTORY INITIALIZATION
+
+&lt;&lt;newinv $inventory&gt;&gt;
+&lt;&lt;set $hasBook == false&gt;&gt;
+&lt;&lt;pickup $inventory &quot;coin&quot; 200&gt;&gt;
+
+//ITEMS
+&lt;&lt;item &quot;book&quot; &quot;Notebook&quot;&gt;&gt;
+	&lt;&lt;description&gt;&gt;\
+    	A notebook collecting details of your travels so far.\
+    &lt;&lt;unique&gt;&gt;
+&lt;&lt;/item&gt;&gt;
+
+&lt;&lt;item &quot;coin&quot; &quot;Coins&quot;&gt;&gt;
+	&lt;&lt;description&gt;&gt;\
+    	The currency that runs the world. You can use it to accomplish all sorts of marvelous things...\
+&lt;&lt;/item&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="Loading Page" tags="loading-page nobr" position="750,25" size="100,100">&lt;div class=&quot;main&quot;&gt;
 
 &lt;nav&gt;
 &lt;&lt;link &quot;Resume Game&quot;&gt;&gt;&lt;&lt;run Save.autosave.load()&gt;&gt;&lt;&lt;/link&gt;&gt;
@@ -1991,12 +2273,40 @@ Now that you&#39;ve picked up your notebook, you can do...</tw-passagedata><tw-p
 &lt;/nav&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;credit&quot;&gt;✦ Template by &lt;a href=&quot;https://outoftheblue-if.tumblr.com&quot; target=&quot;_blank&quot;&gt;Vahnya&lt;/a&gt; ✦&lt;/div&gt;</tw-passagedata><tw-passagedata pid="7" name="Meet NPC" tags="" position="750,275" size="100,100">&lt;&lt;set $haveMetNPC to true&gt;&gt;
+&lt;div class=&quot;credit&quot;&gt;✦ Template by &lt;a href=&quot;https://outoftheblue-if.tumblr.com&quot; target=&quot;_blank&quot;&gt;Vahnya&lt;/a&gt; ✦&lt;/div&gt;</tw-passagedata><tw-passagedata pid="9" name="Meet NPC" tags="" position="750,275" size="100,100">&lt;&lt;set $theme to &quot;night-theme&quot;&gt;&gt;
+
+&lt;&lt;set $haveMetNPC to true&gt;&gt;
 &lt;&lt;notify 3s&gt;&gt;Relationships unlocked!&lt;&lt;/notify&gt;&gt;
 
-You met the NPC
 
-[[OK]]</tw-passagedata><tw-passagedata pid="8" name="More Styles" tags="" position="150,700" size="100,100">!!! Checkbox:
+You met the NPC. Unfortunately, you can&#39;t access the Relationships tab because you don&#39;t have your notebook yet...
+
+&quot;How do I get my notebook?&quot; You ask the NPC.
+
+The NPC looks at you strangely for a moment.
+
+&quot;I think ?her_ hair is kind of strange looking,&quot; you hear her mutter under her breath. This is an absurd statement of course, because why on Earth would &lt;&lt;listbox &quot;$hairstyle&quot; autoselect&gt;&gt;
+	&lt;&lt;option &quot;waist length&quot;&gt;&gt;
+	&lt;&lt;option &quot;shoulder length&quot;&gt;&gt;
+	&lt;&lt;option &quot;bald&quot;&gt;&gt;
+	&lt;&lt;option &quot;Option 4&quot;&gt;&gt;
+	&lt;&lt;option &quot;Option 5&quot;&gt;&gt;
+&lt;&lt;/listbox&gt;&gt;, &lt;&lt;listbox &quot;$hairtexture&quot; autoselect&gt;&gt;
+	&lt;&lt;option &quot;straight&quot;&gt;&gt;
+	&lt;&lt;option &quot;wavy&quot;&gt;&gt;
+	&lt;&lt;option &quot;Option 3&quot;&gt;&gt;
+	&lt;&lt;option &quot;Option 4&quot;&gt;&gt;
+	&lt;&lt;option &quot;Option 5&quot;&gt;&gt;
+&lt;&lt;/listbox&gt;&gt; and &lt;&lt;cycle &quot;$haircolor&quot; autoselect&gt;&gt;
+	&lt;&lt;option &quot;black&quot;&gt;&gt;
+	&lt;&lt;option &quot;white&quot;&gt;&gt;
+	&lt;&lt;option &quot;Option 3&quot;&gt;&gt;
+	&lt;&lt;option &quot;Option 4&quot;&gt;&gt;
+	&lt;&lt;option &quot;Option 5&quot;&gt;&gt;
+&lt;&lt;/cycle&gt;&gt; hair be strange?
+
+
+[[OK]]</tw-passagedata><tw-passagedata pid="10" name="More Styles" tags="" position="150,700" size="100,100">!!! Checkbox:
 &lt;&lt;checkbox &quot;$checkboxVar1&quot; false true autocheck&gt;&gt; Checkbox option 1
 &lt;&lt;checkbox &quot;$checkboxVar2&quot; false true autocheck&gt;&gt; Checkbox option 2
 &lt;&lt;checkbox &quot;$checkboxVar3&quot; false true autocheck&gt;&gt; Checkbox option 3
@@ -2030,27 +2340,40 @@ You met the NPC
 !!! Textbox:
 &lt;&lt;textbox &quot;$textboxVar&quot; &quot;Type answer here&quot;&gt;&gt;
 
-&lt;&lt;button &quot;Autosave&quot; &quot;Autosave&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="Notebook" tags="noreturn" position="150,350" size="100,100">&lt;!-- REMOVING CLASS BOX HEADER FROM TITLE TO GET DIFFERENT HEADER --&gt;
-&lt;h1&gt;Notebook&lt;/h1&gt;
+&lt;&lt;button &quot;Autosave&quot; &quot;Autosave&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="Notebook" tags="noreturn" position="150,350" size="100,100">&lt;h1&gt;Notebook&lt;/h1&gt;
 &lt;p&gt;A collection from your travels.&lt;/p&gt;
 
 &lt;br&gt;&lt;br&gt;
 
 &lt;div class=&quot;box blank&quot;&gt;
-
-&lt;&lt;if $haveMetNPC == true&gt;&gt;
-
-&lt;h2&gt;[[Character Codex]]&lt;/h2&gt;
-
-&lt;&lt;/if&gt;&gt;
-
+    &lt;&lt;if $haveMetNPC == true&gt;&gt;
+        &lt;h2&gt;[[Character Codex]]&lt;/h2&gt;
+    &lt;&lt;/if&gt;&gt;
 &lt;/div&gt;
 
 
 
-&lt;span style=&quot;display: block; text-align: center;&quot;&gt;&lt;&lt;link &quot;« Return to game&quot; $return&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;</tw-passagedata><tw-passagedata pid="10" name="OK" tags="" position="750,400" size="100,100">Now that you&#39;ve met this NPC, try picking this item up!
+&lt;span style=&quot;display: block; text-align: center;&quot;&gt;
+    &lt;&lt;link &quot;« Return to game&quot; $return&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;/span&gt;</tw-passagedata><tw-passagedata pid="12" name="OK" tags="" position="750,400" size="100,100">&lt;&lt;set $theme to &quot;day-theme&quot;&gt;&gt;
 
-[[Pick up your Notebook.|Has Book]]</tw-passagedata><tw-passagedata pid="11" name="Reference" tags="" position="50,700" size="100,100">!Heading 1
+&lt;&lt;if $hairstyle is &quot;bald&quot;&gt;&gt;
+
+	You carress your bald head in exasperation.
+
+&lt;&lt;elseif $hairstyle is &quot;shoulder length&quot;&gt;&gt;
+
+	You run your hands through your short locks in annoyance.
+    
+&lt;&lt;elseif $hairstyle is &quot;waist length&quot;&gt;&gt;
+
+	You flip your long hair in defiance.
+    
+&lt;&lt;/if&gt;&gt;
+
+Now that you&#39;ve met this NPC, try picking this item up! This will unlock your notebook.
+
+[[Pick up your Notebook.|Has Book]]</tw-passagedata><tw-passagedata pid="13" name="Reference" tags="" position="50,700" size="100,100">!Heading 1
 !!Heading 2
 !!!Heading 3
 
@@ -2065,7 +2388,7 @@ Normal text. Normal text. Normal text. Normal text. Normal text. //emphasised te
 [[More Styles]]
 [[More Styles]]
 
-&lt;&lt;button &quot;Button&quot; &quot;More Styles&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="Stats" tags="nobr noreturn edit stat-passage" position="50,350" size="100,100">&lt;div class=&quot;box header&quot;&gt;
+&lt;&lt;button &quot;Button&quot; &quot;More Styles&quot;&gt;&gt;&lt;&lt;/button&gt;&gt;</tw-passagedata><tw-passagedata pid="14" name="Stats" tags="nobr noreturn edit stat-passage" position="50,350" size="100,100">&lt;div class=&quot;box header&quot;&gt;
 &lt;h1&gt;$firstname $lastname&lt;/h1&gt;
 &lt;h2&gt;&quot;$nickname&quot;&lt;/h2&gt;
 &lt;span class=&quot;star&quot;&gt;✦&lt;/span&gt;
@@ -2167,9 +2490,14 @@ Normal text. Normal text. Normal text. Normal text. Normal text. //emphasised te
 &lt;/div&gt;
 
 
-&lt;!-- IMPORTAN! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP --&gt;
+&lt;!-- IMPORTANT! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP --&gt;
 
-&lt;span style=&quot;display: block; text-align: center;&quot;&gt;&lt;&lt;link &quot;« Return to game&quot; $return&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;</tw-passagedata><tw-passagedata pid="13" name="StoryInit" tags="nobr" position="225,0" size="100,100">// FOR SETTING STATS THAT NEED TO BE IN PLAY AT THE START OF THE STORY
+&lt;span style=&quot;display: block; text-align: center;&quot;&gt;
+	&lt;&lt;link &quot;« Return to game&quot; $return&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;/span&gt;</tw-passagedata><tw-passagedata pid="15" name="StoryInit" tags="nobr" position="225,0" size="100,100">// FOR SETTING STATS THAT NEED TO BE IN PLAY AT THE START OF THE STORY
+
+//THEME
+&lt;&lt;set $theme to &quot;day-theme&quot;&gt;&gt;
 
 
 //MAIN CHARACTER
@@ -2177,8 +2505,12 @@ Normal text. Normal text. Normal text. Normal text. Normal text. //emphasised te
 &lt;&lt;set $lastname = &quot;Dashwood&quot;&gt;&gt;
 &lt;&lt;set $nickname = &quot;Ellie&quot;&gt;&gt;
 
+&lt;&lt;set $haircolor = &quot;black&quot;&gt;&gt;
+&lt;&lt;set $hairstyle = &quot;short&quot;&gt;&gt;
+&lt;&lt;set $hairtexture = &quot;straight&quot;&gt;&gt;
 
-//STATS
+
+//MC STATS
 &lt;&lt;set $kind = 50&gt;&gt;
 &lt;&lt;set $cruel = 100 - $kind&gt;&gt;
 &lt;&lt;set $shy = 50&gt;&gt;
@@ -2194,18 +2526,8 @@ Normal text. Normal text. Normal text. Normal text. Normal text. //emphasised te
 //RELATIONSHIPS
 &lt;&lt;set $npcLove = 50&gt;&gt;
 
-
-//INVENTORY
-&lt;&lt;newinv $inventory&gt;&gt;
-&lt;&lt;set $hasBook == false&gt;&gt;
-&lt;&lt;set $money = 0&gt;&gt;
-
-//ITEMS
-&lt;&lt;item &quot;book&quot; &quot;Notebook&quot;&gt;&gt;
-	&lt;&lt;description&gt;&gt;\
-    	A notebook collecting details of your travels so far.\
-    &lt;&lt;unique&gt;&gt;
-&lt;&lt;/item&gt;&gt;</tw-passagedata><tw-passagedata pid="14" name="StoryInterface" tags="don&#39;t-edit nobr" position="2,2" size="100,100">&lt;header&gt;
+&lt;&lt;include [[InventoryInit]]&gt;&gt;
+&lt;&lt;include [[ChoiceInit]]&gt;&gt;</tw-passagedata><tw-passagedata pid="16" name="StoryInterface" tags="don&#39;t-edit nobr" position="2,2" size="100,100">&lt;header&gt;
 &lt;div class=&quot;decoration-i&quot;&gt;✦&lt;/div&gt;
 &lt;div class=&quot;decoration-ii&quot;&gt;✦&lt;/div&gt;
 &lt;div class=&quot;decoration-iii&quot;&gt;✦&lt;/div&gt;
@@ -2298,7 +2620,29 @@ Normal text. Normal text. Normal text. Normal text. Normal text. //emphasised te
 &lt;span id=&quot;backwards-button&quot;&gt;&lt;i class=&quot;fas fa-chevron-left&quot;&gt;&lt;/i&gt;&lt;/span&gt;
 &lt;span&gt;✦&lt;/span&gt;
 &lt;span id=&quot;forwards-button&quot;&gt;&lt;i class=&quot;fas fa-chevron-right&quot;&gt;&lt;/i&gt;&lt;/span&gt;
-&lt;/footer&gt;</tw-passagedata><tw-passagedata pid="15" name="Untitled Passage" tags="" position="1125,150" size="100,100"></tw-passagedata><tw-passagedata pid="16" name="social media" tags="edit nobr" position="150,200" size="100,100">&lt;!-- POPULATE THE SOCIAL MEDIA LINKS --&gt;
+&lt;/footer&gt;</tw-passagedata><tw-passagedata pid="17" name="prol-5" tags="" position="750,675" size="100,100">&lt;&lt;if $c1_2 == 1&gt;&gt;
+    
+    Wow what a diligent student~
+
+    &lt;&lt;elseif $c1_2 == 2&gt;&gt;
+    
+    You need to read more.
+
+    &lt;&lt;elseif $c1_2 == 3&gt;&gt;
+
+    Learn to read
+
+&lt;&lt;/if&gt;&gt;
+
+Anyways, this moving on with the story. Where were we? Right, now that you have your Notebook, let&#39;s talk about why you&#39;re here in the first place. Is it the hot men? Or the enticing aura of ~magic in the air?
+
+Wrong, it&#39;s none of the above. We&#39;re here to talk about your office job.
+
+Yes, that&#39;s right. Your soul crushing, bone crunching, life leeching office job working at MEGACORPA.
+
+It&#39;s not like you want to be here in the first place. Because here&#39;s the catch- you&#39;re not &lt;i&gt;actually&lt;/i&gt; here to work as a regular office employee. No, you came for a different reason.
+
+[[Murder]]</tw-passagedata><tw-passagedata pid="18" name="social media" tags="edit nobr" position="50,200" size="100,100">&lt;!-- POPULATE THE SOCIAL MEDIA LINKS --&gt;
 
 &lt;a href=&quot;INSTAGRAM URL HERE&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fab fa-instagram-square&quot;&gt;&lt;/i&gt;&lt;/a&gt;
 
@@ -2306,7 +2650,7 @@ Normal text. Normal text. Normal text. Normal text. Normal text. //emphasised te
 
 &lt;a href=&quot;PINTEREST URL HERE&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fab fa-pinterest&quot;&gt;&lt;/i&gt;&lt;/a&gt;
 
-&lt;a href=&quot;KO-FI URL HERE&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fas fa-hand-holding-heart&quot;&gt;&lt;/i&gt;&lt;/a&gt;</tw-passagedata><tw-passagedata pid="17" name="stat page 1" tags="nobr noreturn edit stat-passage" position="50,800" size="100,100">&lt;div class=&quot;box header&quot;&gt;
+&lt;a href=&quot;KO-FI URL HERE&quot; target=&quot;_blank&quot;&gt;&lt;i class=&quot;fas fa-hand-holding-heart&quot;&gt;&lt;/i&gt;&lt;/a&gt;</tw-passagedata><tw-passagedata pid="19" name="stat page 1" tags="nobr noreturn edit stat-passage" position="50,800" size="100,100">&lt;div class=&quot;box header&quot;&gt;
 &lt;h1&gt;$firstname $lastname&lt;/h1&gt;
 &lt;h2&gt;&quot;$nickname&quot;&lt;/h2&gt;
 &lt;span class=&quot;star&quot;&gt;✦&lt;/span&gt;
@@ -2385,7 +2729,7 @@ Normal text. Normal text. Normal text. Normal text. Normal text. //emphasised te
 
 &lt;span style=&quot;display: block; text-align: center;&quot;&gt;
 &lt;&lt;link &quot;« Return to game&quot; $return&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;/span&gt;</tw-passagedata><tw-passagedata pid="18" name="stat page 3" tags="nobr edit noreturn" position="150,800" size="100,100">&lt;!-- THIS PASSAGE IS NOT TAGGED WITH STYLE PASSAGE BUT RATHER HAS A FEW ELEMENTS WRAPPED IN THAT CLASS TO ONLY STYLE CERTAIN ELEMENTS --&gt;
+&lt;/span&gt;</tw-passagedata><tw-passagedata pid="20" name="stat page 3" tags="nobr edit noreturn" position="150,800" size="100,100">&lt;!-- THIS PASSAGE IS NOT TAGGED WITH STYLE PASSAGE BUT RATHER HAS A FEW ELEMENTS WRAPPED IN THAT CLASS TO ONLY STYLE CERTAIN ELEMENTS --&gt;
 
 &lt;!-- REMOVING CLASS BOX HEADER FROM TITLE TO GET DIFFERENT HEADER --&gt;
 &lt;h1&gt;Title&lt;/h1&gt;
@@ -2393,18 +2737,18 @@ Normal text. Normal text. Normal text. Normal text. Normal text. //emphasised te
 
 &lt;!-- ADDING STAT PASSAGE CLASS TO UL LIST TO KEEP STYLING FOR THIS ELEMENT --&gt;
 &lt;div class=&quot;stat-passage&quot;&gt;
-&lt;ul class=&quot;facts&quot;&gt;
-&lt;li&gt;Female&lt;/li&gt;
-&lt;li&gt;26&lt;/li&gt;
-&lt;li&gt;Human&lt;/li&gt;
-&lt;/ul&gt;
+    &lt;ul class=&quot;facts&quot;&gt;
+        &lt;li&gt;Female&lt;/li&gt;
+        &lt;li&gt;26&lt;/li&gt;
+        &lt;li&gt;Human&lt;/li&gt;
+    &lt;/ul&gt;
 &lt;/div&gt;
 
 &lt;br&gt;&lt;br&gt;
 
 &lt;div class=&quot;box blank&quot;&gt;
-&lt;h2&gt;Appearance&lt;/h2&gt;
-&lt;i&gt;$firstname is tall and of average size with golden blond hair and pale skin.&lt;/i&gt;
+    &lt;h2&gt;Appearance&lt;/h2&gt;
+    &lt;i&gt;$firstname is tall and of average size with golden blond hair and pale skin.&lt;/i&gt;
 &lt;/div&gt;
 
 &lt;!-- ADDING STAT PASSAGE CLASS TO KEEP STYLING S--&gt;
@@ -2415,52 +2759,57 @@ Normal text. Normal text. Normal text. Normal text. Normal text. //emphasised te
 &lt;h3&gt;Personality&lt;/h3&gt;
 
 &lt;div class=&quot;stat-group&quot;&gt;
-&lt;div class=&quot;stat&quot;&gt;
-&lt;div class=&quot;stat-labels&quot;&gt;
-&lt;span&gt;Kind 70%&lt;/span&gt;
-&lt;span&gt;✦&lt;/span&gt;
-&lt;span&gt;Cruel 30%&lt;/span&gt;
-&lt;/div&gt;
-&lt;div class=&quot;stat-bar-container&quot;&gt;
-&lt;div class=&quot;stat-bar&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
+    &lt;div class=&quot;stat&quot;&gt;
+        &lt;div class=&quot;stat-labels&quot;&gt;
+            &lt;span&gt;Kind 70%&lt;/span&gt;
+            &lt;span&gt;✦&lt;/span&gt;
+            &lt;span&gt;Cruel 30%&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;div class=&quot;stat-bar-container&quot;&gt;
+        &lt;div class=&quot;stat-bar&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;stat&quot;&gt;
-&lt;div class=&quot;stat-labels&quot;&gt;
-&lt;span&gt;Shy 70%&lt;/span&gt;
-&lt;span&gt;✦&lt;/span&gt;
-&lt;span&gt;Bold 30%&lt;/span&gt;
+    &lt;div class=&quot;stat-labels&quot;&gt;
+        &lt;span&gt;Shy 70%&lt;/span&gt;
+        &lt;span&gt;✦&lt;/span&gt;
+        &lt;span&gt;Bold 30%&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;stat-bar-container&quot;&gt;
+        &lt;div class=&quot;stat-bar&quot;&gt;
+    &lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class=&quot;stat-bar-container&quot;&gt;
-&lt;div class=&quot;stat-bar&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
+
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;box blank&quot;&gt;
-&lt;h3&gt;Skills&lt;/h3&gt;
-&lt;div class=&quot;stat-group&quot;&gt;
-&lt;div class=&quot;stat&quot;&gt;
-&lt;div class=&quot;stat-labels&quot;&gt;
-&lt;span&gt;Embroidery&lt;/span&gt;
-&lt;span&gt;✦&lt;/span&gt;
-&lt;span&gt;70%&lt;/span&gt;
-&lt;/div&gt;
-&lt;div class=&quot;stat-bar-container&quot;&gt;
-&lt;div class=&quot;stat-bar&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
+    &lt;h3&gt;Skills&lt;/h3&gt;
+        &lt;div class=&quot;stat-group&quot;&gt;
+            &lt;div class=&quot;stat&quot;&gt;
+                &lt;div class=&quot;stat-labels&quot;&gt;
+                &lt;span&gt;Embroidery&lt;/span&gt;
+                &lt;span&gt;✦&lt;/span&gt;
+                &lt;span&gt;70%&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;div class=&quot;stat-bar-container&quot;&gt;
+            &lt;div class=&quot;stat-bar&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;stat&quot;&gt;
-&lt;div class=&quot;stat-labels&quot;&gt;
-&lt;span&gt;Dancing&lt;/span&gt;
-&lt;span&gt;✦&lt;/span&gt;
-&lt;span&gt;70%&lt;/span&gt;
-&lt;/div&gt;
-&lt;div class=&quot;stat-bar-container&quot;&gt;
-&lt;div class=&quot;stat-bar&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;stat-labels&quot;&gt;
+        &lt;span&gt;Dancing&lt;/span&gt;
+        &lt;span&gt;✦&lt;/span&gt;
+        &lt;span&gt;70%&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;stat-bar-container&quot;&gt;
+        &lt;div class=&quot;stat-bar&quot;&gt;
+    &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -2469,13 +2818,15 @@ Normal text. Normal text. Normal text. Normal text. Normal text. //emphasised te
 
 &lt;!-- IMPORTAN! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP --&gt;
 
-&lt;span style=&quot;display: block; text-align: center;&quot;&gt;&lt;&lt;link &quot;« Return to game&quot; $return&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;</tw-passagedata><tw-passagedata pid="19" name="story links" tags="edit nobr" position="50,200" size="100,100">&lt;!-- POPULATES STORY LINKS IN THE HEADER MENU --&gt;
+&lt;span style=&quot;display: block; text-align: center;&quot;&gt;
+    &lt;&lt;link &quot;« Return to game&quot; $return&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;/span&gt;</tw-passagedata><tw-passagedata pid="21" name="story links" tags="edit nobr" position="150,200" size="100,100">&lt;!-- POPULATES STORY LINKS IN THE HEADER MENU --&gt;
 
 &lt;li&gt; [[Stats]] &lt;/li&gt;
 &lt;&lt;if $hasBook == true&gt;&gt;
 	&lt;li&gt; [[Notebook]] &lt;/li&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;li&gt; [[Inventory]] &lt;/li&gt;</tw-passagedata><tw-passagedata pid="20" name="story logo" tags="edit nobr" position="350,200" size="100,100">&lt;!-- STORY BANNER/LOGO POPULATED HERE --&gt;
+&lt;li&gt; [[Inventory]] &lt;/li&gt;</tw-passagedata><tw-passagedata pid="22" name="story logo" tags="edit nobr" position="350,200" size="100,100">&lt;!-- STORY BANNER/LOGO POPULATED HERE --&gt;
 
 &lt;div class=&quot;story-banner&quot;&gt;
 &lt;div class=&quot;content&quot;&gt;
@@ -2495,7 +2846,7 @@ Normal text. Normal text. Normal text. Normal text. Normal text. //emphasised te
 &lt;h3 class=&quot;story-author&quot;&gt;By &lt;a href=&quot;#&quot;&gt;&lt;/a&gt;Author&lt;/h3&gt;
 
 &lt;/div&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="21" name="story title" tags="nobr edit" position="250,200" size="100,100">&lt;!-- TITLE ON THE TOP OF THE PAGE IS POPULATED HERE --&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="23" name="story title" tags="nobr edit" position="250,200" size="100,100">&lt;!-- TITLE ON THE TOP OF THE PAGE IS POPULATED HERE --&gt;
 
 &lt;!-- STORY TITLE --&gt;
 &lt;h1&gt;Game Title&lt;/h1&gt;

@@ -1,0 +1,26 @@
+:: prol-5 {"position":"750,675","size":"100,100"}
+
+<<if $c1_2 == 1>>
+    
+    Wow what a diligent student~
+
+    <<elseif $c1_2 == 2>>
+    
+    You need to read more.
+
+    <<elseif $c1_2 == 3>>
+
+    Learn to read
+
+<</if>>
+
+Anyways, this moving on with the story. Where were we? Right, now that you have your Notebook, let's talk about why you're here in the first place. Is it the hot men? Or the enticing aura of ~magic in the air?
+
+Wrong, it's none of the above. We're here to talk about your office job.
+
+Yes, that's right. Your soul crushing, bone crunching, life leeching office job working at MEGACORPA.
+
+It's not like you want to be here in the first place. Because here's the catch- you're not <i>actually</i> here to work as a regular office employee. No, you came for a different reason.
+
+[[Murder]]
+

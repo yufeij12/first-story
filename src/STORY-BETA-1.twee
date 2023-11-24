@@ -1,0 +1,2854 @@
+:: StoryTitle
+STORY-BETA-1
+
+
+:: StoryData
+{
+  "ifid": "2AC7FFE6-4787-4918-8961-4466A7EBC28E",
+  "format": "SugarCube",
+  "format-version": "2.36.1",
+  "start": "Loading Page",
+  "tag-colors": {
+    "don't-edit": "red",
+    "edit": "green",
+    "maybe-don't-change": "blue",
+    "ui": "blue",
+    "widget": "red"
+  },
+  "zoom": 1
+}
+
+
+:: Autosave [autosave] {"position":"250,700","size":"100,100"}
+<<notify>>Autosave complete!<</notify>>
+
+This passage autosaves, and the next time the game opens the player will be able to resume from here.
+
+
+:: Chapter I {"position":"750,150","size":"100,100"}
+This is a test.
+
+Who am I talking to?
+
+<<link 'Configure your gender and pronouns.'>>
+    <<pronouns>>
+<</link>>
+
+What do I call you?
+
+First name: <<textbox "$firstname" " " autofocus>>
+Last name: <<textbox "$lastname" " " >>
+
+<span class="enter"><<button "That's me...">>
+<<if $firstname == " " or $lastname == " ">>
+	<<replace "#name-error">>Please enter a first and last name!<</replace>>
+<<else>>
+    <<replace "#enter-nickname">>
+        Nice to meet you, $firstname $lastname!
+
+        Hmm...that seems a little formal. How do your friends usually address you?
+
+        Nickname: <<textbox "$nickname" " ">>
+
+        <span class="enter"><<button "That's what my friends call me...">>
+        <<if $nickname == $firstname>>
+            <<replace "#nickname-response">>
+            No nickname? I see, $firstname it is!
+
+            Next, let's meet an NPC to unlock the character codex!
+            
+            [[Meet NPC]]
+            <</replace>>
+        <<else>>
+            <<replace "#nickname-response">>
+            That's more like it. Nice to meet you, $nickname!
+
+            Next, let's meet an NPC to unlock the character codex!
+            
+            [[Meet NPC]]
+            <</replace>>
+        <</if>>
+        <</button>></span>
+    <</replace>>
+<</if>>
+<</button>> </span>
+&nbsp;&nbsp; \
+
+<span id="name-error"></span>
+<span id="enter-nickname"></span>
+<span id="nickname-response"></span>
+
+
+:: Character Codex [noreturn nobr character-codex] {"position":"150,500","size":"100,100"}
+<h1>Character Codex</h1>
+<br><br>
+<div class="container">
+	<div class ="card">
+		<div class="content">
+    		<div class="left">
+        		<div class="avatar">
+            		<span>N</span>
+      			</div>
+             </div>
+        
+        <div class="right">
+        	<h3>NPC</h3>
+              <ul>
+                  <li>Ageless</li>
+                  <li>Human</li>
+                  <li>Female</li>
+              </ul>
+            <<if $npcLove >= 90 >>
+            	<p>The NPC thinks you are amazing!</p>
+            <<elseif $npcLove>= 70 >>
+            	<p>The NPC likes you.</p>
+             <<elseif $npcLove >= 50 >>
+             	<p>The NPC thinks you are mid.</p>
+             <<elseif $npcLove >= 30 >>
+             	<p>The NPC thinks you are okay...</p>
+             <<else>>
+             	<p>The NPC does not like you.</p>
+            <</if>>
+        </div>
+      </div>   
+       <div class="stat">
+        	<div class="stat-labels">
+            	<span>Relationship</span>
+            </div>
+            <div class="stat-bar-container">
+				<div class="stat-bar" id="npcLove"></div>
+			</div>
+        </div>
+
+       
+	</div>
+</div>
+
+
+<br><br>
+<span style="display: block; text-align: center;">
+[[« Return to Notebook|Notebook]]
+</span>
+
+
+:: ChoiceInit {"position":"350,100","size":"100,100"}
+<<set $c1_2 = 1>>
+
+
+:: Has Book {"position":"750,525","size":"100,100"}
+<<set $hasBook to true>>
+<<pickup $inventory "book" 1>>
+<<notify 3s>>Notebook unlocked!<</notify>>
+
+You can now access the notebook via the top menu.
+
+<<set $int to $int +5>>
+
+Your intelligence has now increased!
+
+
+[[I've been a lover of writing since youth, spending many hours scribbling into my notebook.|prol-5][$c1_2 to 1]]
+
+[[I don't really like writing, but notebooks are so useful for recording my thoughts...|prol-5][$c1_2 to 2]]
+
+[[I have a notebook? Right...totally forgot about that. Maybe I should actually use it...|prol-5][$c1_2 to 3]]
+
+
+
+:: Inventory [noreturn] {"position":"250,350","size":"100,100"}
+<h1>Inventory</h1>
+
+<<if $inventory.length is 0>>\
+	Your inventory is empty!
+<<else>>\
+	<<inv $inventory inspect>>
+<</if>>
+
+<span style="display: block; text-align: center;">
+	<<link "« Return to game" $return>><</link>>
+</span>
+
+
+:: InventoryInit {"position":"350,0","size":"100,100"}
+//INVENTORY INITIALIZATION
+
+<<newinv $inventory>>
+<<set $hasBook == false>>
+<<pickup $inventory "coin" 200>>
+
+//ITEMS
+<<item "book" "Notebook">>
+	<<description>>\
+    	A notebook collecting details of your travels so far.\
+    <<unique>>
+<</item>>
+
+<<item "coin" "Coins">>
+	<<description>>\
+    	The currency that runs the world. You can use it to accomplish all sorts of marvelous things...\
+<</item>>
+
+
+:: Loading Page [loading-page nobr] {"position":"750,25","size":"100,100"}
+<div class="main">
+
+<nav>
+<<link "Resume Game">><<run Save.autosave.load()>><</link>>
+<<link "Load Game">><<run UI.saves();>><</link>>
+</nav>
+
+<div class="story-banner">
+<div class="content">
+
+<!-- STORY TITLE -->
+<h1 class="story-title">Game Title</h1>
+
+<!-- ICON -->
+<i class="fab fa-pagelines"></i>
+
+<!-- STORY SUBTITLE -->
+<h2 class="story-subtitle">Game Subtitle</h2>
+
+<span>✦</span>
+
+<!-- STORY AUTHOR -->
+<h3 class="story-author">By <a href="#"></a>Author</h3>
+
+</div>
+</div>
+
+<nav>
+<<link "New Game" "Chapter I">><</link>>
+<<link "Settings">><<run UI.settings();>><</link>>
+</nav>
+</div>
+
+<div class="credit">✦ Template by <a href="https://outoftheblue-if.tumblr.com" target="_blank">Vahnya</a> ✦</div>
+
+
+:: Meet NPC {"position":"750,275","size":"100,100"}
+<<set $theme to "night-theme">>
+
+<<set $haveMetNPC to true>>
+<<notify 3s>>Relationships unlocked!<</notify>>
+
+
+You met the NPC. Unfortunately, you can't access the Relationships tab because you don't have your notebook yet...
+
+"How do I get my notebook?" You ask the NPC.
+
+The NPC looks at you strangely for a moment.
+
+"I think ?her_ hair is kind of strange looking," you hear her mutter under her breath. This is an absurd statement of course, because why on Earth would <<listbox "$hairstyle" autoselect>>
+	<<option "waist length">>
+	<<option "shoulder length">>
+	<<option "bald">>
+	<<option "Option 4">>
+	<<option "Option 5">>
+<</listbox>>, <<listbox "$hairtexture" autoselect>>
+	<<option "straight">>
+	<<option "wavy">>
+	<<option "Option 3">>
+	<<option "Option 4">>
+	<<option "Option 5">>
+<</listbox>> and <<cycle "$haircolor" autoselect>>
+	<<option "black">>
+	<<option "white">>
+	<<option "Option 3">>
+	<<option "Option 4">>
+	<<option "Option 5">>
+<</cycle>> hair be strange?
+
+
+[[OK]]
+
+
+:: More Styles {"position":"150,700","size":"100,100"}
+!!! Checkbox:
+<<checkbox "$checkboxVar1" false true autocheck>> Checkbox option 1
+<<checkbox "$checkboxVar2" false true autocheck>> Checkbox option 2
+<<checkbox "$checkboxVar3" false true autocheck>> Checkbox option 3
+
+!!! Cycle:
+<<cycle "$cycleVar" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+	<<option "Option 4">>
+	<<option "Option 5">>
+<</cycle>>
+
+!!! Listbox:
+<<listbox "$listboxVar" autoselect>>
+	<<option "Option 1">>
+	<<option "Option 2">>
+	<<option "Option 3">>
+	<<option "Option 4">>
+	<<option "Option 5">>
+<</listbox>>
+
+!!! Radiobutton:
+<<radiobutton "$radiobuttonVar" "option 1" autocheck>> Option 1
+<<radiobutton "$radiobuttonVar" "option 2" autocheck>> Option 2
+<<radiobutton "$radiobuttonVar" "option 3" autocheck>> Option 3
+
+!!! Textarea:
+<<textarea "$textareaVar" "Type text here..">>
+
+!!! Textbox:
+<<textbox "$textboxVar" "Type answer here">>
+
+<<button "Autosave" "Autosave">><</button>>
+
+
+:: Notebook [noreturn] {"position":"150,350","size":"100,100"}
+<h1>Notebook</h1>
+<p>A collection from your travels.</p>
+
+<br><br>
+
+<div class="box blank">
+    <<if $haveMetNPC == true>>
+        <h2>[[Character Codex]]</h2>
+    <</if>>
+</div>
+
+
+
+<span style="display: block; text-align: center;">
+    <<link "« Return to game" $return>><</link>>
+</span>
+
+
+:: OK {"position":"750,400","size":"100,100"}
+<<set $theme to "day-theme">>
+
+<<if $hairstyle is "bald">>
+
+	You carress your bald head in exasperation.
+
+<<elseif $hairstyle is "shoulder length">>
+
+	You run your hands through your short locks in annoyance.
+    
+<<elseif $hairstyle is "waist length">>
+
+	You flip your long hair in defiance.
+    
+<</if>>
+
+Now that you've met this NPC, try picking this item up! This will unlock your notebook.
+
+[[Pick up your Notebook.|Has Book]]
+
+
+:: Reference {"position":"50,700","size":"100,100"}
+!Heading 1
+!!Heading 2
+!!!Heading 3
+
+Normal text. Normal text. Normal text. Normal text. Normal text. //emphasised text//. Normal text. Normal text. Normal text. Normal text. Normal text. Normal text. Normal text. ''strong text''. Normal text. Normal text. Normal text. Normal text. Normal text. Normal text. Normal text. Normal text. __underlined text__ Normal text. Normal text. Normal text. Normal text. Normal text. 
+
+----
+!!!Unordered List:
+* List item 1
+* List item 2
+
+!!!Links
+[[More Styles]]
+[[More Styles]]
+
+<<button "Button" "More Styles">><</button>>
+
+
+:: Stats [nobr noreturn edit stat-passage] {"position":"50,350","size":"100,100"}
+<div class="box header">
+<h1>$firstname $lastname</h1>
+<h2>"$nickname"</h2>
+<span class="star">✦</span>
+
+<ul class="facts">
+<li>Text</li>
+<li>Text</li>
+<li>Text</li>
+</ul>
+</div>
+
+<!-- TEXT BOX BUT WITHOUT BACKGROUND -->
+
+<div class="box blank">
+<h3>Appearance</h3>
+<i>$firstname is tall and of average size with golden blond hair and pale skin.</i>
+</div>
+
+<!-- STAT BOX BUT WITHOUT BACKGROUND -->
+
+<div class="box blank">
+
+<!-- STAT GROUP TITLE -->
+<h3>Personality</h3>
+
+<div class="stat-group">
+	<div class="stat">
+		<div class="stat-labels">
+			<span>Kind $kind%</span>
+			<span>✦</span>
+			<span>Cruel $cruel%</span>
+		</div>
+	<div class="stat-bar-container">
+		<div class="stat-bar" id="kind-stat">
+		</div>
+	</div>
+</div>
+
+<div class="stat">
+	<div class="stat-labels">
+		<span>Shy $shy%</span>
+		<span>✦</span>
+		<span>Bold $bold%</span>
+	</div>
+<div class="stat-bar-container">
+	<div class="stat-bar" id="bold-stat"></div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+<div class="box blank">
+
+<h3>Skills</h3>
+<div class="stat-group">
+	<div class="stat">
+	<div class="stat-labels">
+		<span>Charisma ✦</span>
+		<span>$chr</span>
+	</div>
+	<div class="stat-bar-container">
+		<div class="stat-bar" id="chr-stat"></div>
+	</div>
+</div>
+
+<div class="stat">
+	<div class="stat-labels">
+		<span>Intellect ✦</span>
+		<span>$int</span>
+	</div>
+<div class="stat-bar-container">
+	<div class="stat-bar" id="int-stat"></div>
+	</div>
+</div>
+
+<div class="stat">
+	<div class="stat-labels">
+		<span>Strength ✦</span>
+		<span>$str</span>
+	</div>
+	<div class="stat-bar-container">
+		<div class="stat-bar" id="str-stat"></div>
+	</div>
+</div>
+
+<div class="stat">
+	<div class="stat-labels">
+		<span>Magic ✦</span>
+		<span>$mag</span>
+	</div>
+	<div class="stat-bar-container">
+		<div class="stat-bar" id="mag-stat"></div>
+	</div>
+</div>
+
+</div>
+</div>
+
+
+<!-- IMPORTANT! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP -->
+
+<span style="display: block; text-align: center;">
+	<<link "« Return to game" $return>><</link>>
+</span>
+
+
+:: StoryInit [nobr] {"position":"225,0","size":"100,100"}
+// FOR SETTING STATS THAT NEED TO BE IN PLAY AT THE START OF THE STORY
+
+//THEME
+<<set $theme to "day-theme">>
+
+
+//MAIN CHARACTER
+<<set $firstname = "Eleanor">>
+<<set $lastname = "Dashwood">>
+<<set $nickname = "Ellie">>
+
+<<set $haircolor = "black">>
+<<set $hairstyle = "short">>
+<<set $hairtexture = "straight">>
+
+
+//MC STATS
+<<set $kind = 50>>
+<<set $cruel = 100 - $kind>>
+<<set $shy = 50>>
+<<set $bold =100 - $shy>>
+<<set $chr = 0>>
+<<set $int = 0>>
+<<set $str = 0>>
+<<set $mag = 0>>
+
+//CHARACTERS
+<<set $haveMetNPC == false>>
+
+//RELATIONSHIPS
+<<set $npcLove = 50>>
+
+<<include [[InventoryInit]]>>
+<<include [[ChoiceInit]]>>
+
+
+:: StoryInterface [don't-edit nobr] {"position":"2,2","size":"100,100"}
+<header>
+<div class="decoration-i">✦</div>
+<div class="decoration-ii">✦</div>
+<div class="decoration-iii">✦</div>
+<div class="decoration-v">✦</div>
+
+<div id="header-top">
+
+<!-- SOCIAL MEDIA ICONS (POPULATED IN THE social media PASSAGE) -->
+<nav class="social-media" data-passage="social media">
+
+</nav>
+
+<div class="middle">
+
+<!-- STORY TITLE ETC. WHEN MENU IS CLOSED -->
+<div class="title" data-passage="story title">
+
+</div>
+
+<!-- OPEN MENU ICON -->
+<span id="menu-toggle">
+<i class="fas fa-chevron-down"></i>
+</span>
+</div>
+
+<!-- SETTINGS, RESTART, SAVE & FULLSCREEN BUTTONS -->
+<nav class="tools">
+<span id="header-settings-button"><i class="fas fa-cog"></i></span>
+<span id="header-restart-button"><i class="fas fa-undo"></i></span>
+<span id="header-saves-button"><i class="fas fa-save"></i></span>
+<span id="header-fullscreen-button"><i class="fas fa-expand-arrows-alt"></i></span>
+</nav>
+
+</div>
+
+<div id="header-body">
+<div class="content">
+
+<!-- SETTINGS, RESTART, SAVE & FULLSCREEN BUTTONS -->
+<nav class="tools">
+<span id="menu-settings-button"><i class="fas fa-cog"></i></span>
+<span id="menu-restart-button"><i class="fas fa-undo"></i></span>
+<span id="menu-saves-button"><i class="fas fa-save"></i></span>
+<span id="menu-fullscreen-button"><i class="fas fa-expand-arrows-alt"></i></span>
+</nav>
+
+<!-- STORY LOGO (POPULATED IN THE story logo PASSAGE) -->
+<div class="logo-image" data-passage="story logo">
+
+</div>
+
+<!-- STORY LINKS (POPULATED IN THE story links PASSAGE) -->
+<ul id="story-menu" data-passage="story links">
+
+</ul>
+
+<!-- SOCIAL MEDIA ICONS (POPULATED IN THE social media PASSAGE) -->
+<div class="social-media" data-passage="social media">
+
+</div>
+</div>
+
+<div class="credit">✦ Template by <a href="https://outoftheblue-if.tumblr.com" target="_blank">Vahnya</a> ✦</div>
+
+</div> <!-- header body end tag -->
+</header>
+
+<div id="main">
+
+<div class="decoration-separator">
+<span>✦</span>
+<span>✦</span>
+<span>✦</span>
+<span>✦</span>
+</div>
+
+<div id="passages">
+</div>
+
+<div class="decoration-separator">
+<span>✦</span>
+<span>✦</span>
+<span>✦</span>
+<span>✦</span>
+</div>
+</div> <!-- #main -->
+
+<footer>
+<!-- BACKWARDS AND FORWARDS BUTTONS, YOU CAN REMOVE THIS IF YOU DON'T WANT THEM IN YOUR STORY -->
+<span id="backwards-button"><i class="fas fa-chevron-left"></i></span>
+<span>✦</span>
+<span id="forwards-button"><i class="fas fa-chevron-right"></i></span>
+</footer>
+
+
+:: prol-5 {"position":"750,675","size":"100,100"}
+
+
+
+:: social media [edit nobr] {"position":"50,200","size":"100,100"}
+<!-- POPULATE THE SOCIAL MEDIA LINKS -->
+
+<a href="INSTAGRAM URL HERE" target="_blank"><i class="fab fa-instagram-square"></i></a>
+
+<a href="TUMBLR URL HERE" target="_blank"><i class="fab fa-tumblr"></i></a>
+
+<a href="PINTEREST URL HERE" target="_blank"><i class="fab fa-pinterest"></i></a>
+
+<a href="KO-FI URL HERE" target="_blank"><i class="fas fa-hand-holding-heart"></i></a>
+
+
+:: stat page 1 [nobr noreturn edit stat-passage] {"position":"50,800","size":"100,100"}
+<div class="box header">
+<h1>$firstname $lastname</h1>
+<h2>"$nickname"</h2>
+<span class="star">✦</span>
+
+<ul class="facts">
+<li>Female</li>
+<li>26</li>
+<li>Human</li>
+</ul>
+</div>
+
+<div class="box">
+<h3>Appearance</h3>
+<i>Text here. Text here. Text here. Text here. Text here. Text here. Text here. Text here. Text here. Text here. Text here. Text here. </i>
+</div>
+
+<!-- BOX WITH GROUP OF STATS -->
+<div class="box">
+
+<!-- STAT GROUP TITLE -->
+<h3>Personality</h3>
+
+<div class="stat-group">
+<div class="stat">
+<div class="stat-labels">
+<span>Kind 70%</span>
+<span>✦</span>
+<span>Cruel 30%</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar"></div>
+</div>
+</div>
+
+<div class="stat">
+<div class="stat-labels">
+<span>Shy 70%</span>
+<span>✦</span>
+<span>Bold 30%</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar"></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="box">
+<h3>Skills</h3>
+<div class="stat-group">
+<div class="stat">
+<div class="stat-labels">
+<span>Embroidery</span>
+<span>✦</span>
+<span>70%</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar"></div>
+</div>
+</div>
+
+<div class="stat">
+<div class="stat-labels">
+<span>Dancing</span>
+<span>✦</span>
+<span>70%</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar"></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- IMPORTAN! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP -->
+
+<span style="display: block; text-align: center;">
+<<link "« Return to game" $return>><</link>>
+</span>
+
+
+:: stat page 3 [nobr edit noreturn] {"position":"150,800","size":"100,100"}
+<!-- THIS PASSAGE IS NOT TAGGED WITH STYLE PASSAGE BUT RATHER HAS A FEW ELEMENTS WRAPPED IN THAT CLASS TO ONLY STYLE CERTAIN ELEMENTS -->
+
+<!-- REMOVING CLASS BOX HEADER FROM TITLE TO GET DIFFERENT HEADER -->
+<h1>Title</h1>
+<h2>Subtitle</h2>
+
+<!-- ADDING STAT PASSAGE CLASS TO UL LIST TO KEEP STYLING FOR THIS ELEMENT -->
+<div class="stat-passage">
+    <ul class="facts">
+        <li>Female</li>
+        <li>26</li>
+        <li>Human</li>
+    </ul>
+</div>
+
+<br><br>
+
+<div class="box blank">
+    <h2>Appearance</h2>
+    <i>$firstname is tall and of average size with golden blond hair and pale skin.</i>
+</div>
+
+<!-- ADDING STAT PASSAGE CLASS TO KEEP STYLING S-->
+<div class="stat-passage">
+<div class="box blank">
+
+<!-- STAT GROUP TITLE -->
+<h3>Personality</h3>
+
+<div class="stat-group">
+    <div class="stat">
+        <div class="stat-labels">
+            <span>Kind 70%</span>
+            <span>✦</span>
+            <span>Cruel 30%</span>
+        </div>
+    <div class="stat-bar-container">
+        <div class="stat-bar">
+        </div>
+    </div>
+</div>
+
+<div class="stat">
+    <div class="stat-labels">
+        <span>Shy 70%</span>
+        <span>✦</span>
+        <span>Bold 30%</span>
+    </div>
+    <div class="stat-bar-container">
+        <div class="stat-bar">
+    </div>
+    </div>
+</div>
+
+</div>
+</div>
+
+<div class="box blank">
+    <h3>Skills</h3>
+        <div class="stat-group">
+            <div class="stat">
+                <div class="stat-labels">
+                <span>Embroidery</span>
+                <span>✦</span>
+                <span>70%</span>
+            </div>
+        <div class="stat-bar-container">
+            <div class="stat-bar">
+        </div>
+    </div>
+</div>
+
+<div class="stat">
+    <div class="stat-labels">
+        <span>Dancing</span>
+        <span>✦</span>
+        <span>70%</span>
+    </div>
+    <div class="stat-bar-container">
+        <div class="stat-bar">
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- IMPORTAN! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP -->
+
+<span style="display: block; text-align: center;">
+    <<link "« Return to game" $return>><</link>>
+</span>
+
+
+:: story links [edit nobr] {"position":"150,200","size":"100,100"}
+<!-- POPULATES STORY LINKS IN THE HEADER MENU -->
+
+<li> [[Stats]] </li>
+<<if $hasBook == true>>
+	<li> [[Notebook]] </li>
+<</if>>
+<li> [[Inventory]] </li>
+
+
+:: story logo [edit nobr] {"position":"350,200","size":"100,100"}
+<!-- STORY BANNER/LOGO POPULATED HERE -->
+
+<div class="story-banner">
+<div class="content">
+
+<!-- STORY TITLE -->
+<h1 class="story-title">Game Title</h1>
+
+<!-- ICON -->
+<i class="fas fa-broom"></i>
+
+<!-- STORY SUBTITLE -->
+<h2 class="story-subtitle">Game Subtitle</h2>
+
+<span>✦</span>
+
+<!-- STORY AUTHOR -->
+<h3 class="story-author">By <a href="#"></a>Author</h3>
+
+</div>
+</div>
+
+
+:: story title [nobr edit] {"position":"250,200","size":"100,100"}
+<!-- TITLE ON THE TOP OF THE PAGE IS POPULATED HERE -->
+
+<!-- STORY TITLE -->
+<h1>Game Title</h1>
+
+<!-- ICON -->
+<i class="fab fa-pagelines"></i>
+
+<!-- STORY SUBTITLE -->
+<h2>Game Subtitle</h2>
+
+
+:: StoryScript [script]
+// TO AUTOSAVE ON PASSAGES TAGGED "BOOKMARK" OR "AUTOSAVE" FOR THE "RESUME GAME" FEATURE ON LOAD SCREEN
+Config.saves.autosave = ["bookmark", "autosave"];
+
+// THIS IS WHERE YOU IMPORT YOUR OWN FONTAWESOME KIT URL
+importScripts(
+	'https://kit.fontawesome.com/14cbc407b4.js'
+);
+
+// IMPORTING FONTS FROM GOOGLE FONTS + ICONS FROM LINEAR ICONS
+importStyles('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300;400;500;600;700&display=swap','https://cdn.linearicons.com/free/1.0.0/icon-font.min.css');
+
+$(document).ready(function() {
+	$("#menu-settings-button").on("click", function(){
+		UI.settings();
+	});
+	
+	$("#menu-restart-button").on("click", function(){
+		UI.restart();
+	});
+		
+	$("#menu-saves-button").on("click", function(){
+		UI.saves();
+	});
+		
+	$("#menu-fullscreen-button").on("click", function(){
+		Fullscreen.toggle();
+	});
+	
+		$("#header-settings-button").on("click", function(){
+		UI.settings();
+	});
+	
+	$("#header-restart-button").on("click", function(){
+		UI.restart();
+	});
+		
+	$("#header-saves-button").on("click", function(){
+		UI.saves();
+	});
+		
+	$("#header-fullscreen-button").on("click", function(){
+		Fullscreen.toggle();
+	});
+	
+	$("#menu-toggle").on("click", function() {
+		$("header").toggleClass("toggled");
+
+    var header = $("header");
+
+    if(header.hasClass("toggled")) {
+      $("#menu-toggle").html('<i class="fas fa-chevron-up"></i>');
+    } else {
+      $("#menu-toggle").html('<i class="fas fa-chevron-down"></i>')
+    }
+	});
+	
+	
+	$("#backwards-button").on("click", function() {
+		Engine.backward();
+	});	
+	
+	$("#forwards-button").on("click", function() {
+		Engine.forward();
+	});
+});
+
+$(document).on(":passagestart", function() {
+	if (!tags().includes("noreturn")) {
+		/* If it doesn't, then set $return to the current passage name. */
+		State.variables.return = passage();
+	}
+});
+
+/*THEME FOR NIGHT AND DAY */
+
+$(document).on(":passagedisplay", function(){
+    var theme = State.getVar("$theme");
+
+    if (theme == "day-theme") {
+        $(':root').css({
+            "--color1": "#94bbe9",
+            "--color2": "#9793c8",
+            "--color3": "#eeaeca"})
+    } else if (theme == "night-theme"){
+         $(':root').css({
+            "--color1": "#771035",
+            "--color2": "#b84c71",
+            "--color3": "#d578a0"})           
+    }
+});
+
+/*STAT BAR DATA*/
+$(document).on(":passagedisplay", function(){
+  
+  var kindStat = State.getVar("$kind")+ "%";
+  $("#kind-stat").attr("style", "width: " + kindStat);
+  
+});
+
+$(document).on(":passagedisplay", function(){
+  
+  var boldStat = State.getVar("$bold")+ "%";
+  $("#bold-stat").attr("style", "width: " + boldStat);
+  
+});
+
+
+$(document).on(":passagedisplay", function(){
+  
+  var chrStat = State.getVar("$chr")+ "%";
+  $("#chr-stat").attr("style", "width: " + chrStat);
+  
+});
+
+$(document).on(":passagedisplay", function(){
+  
+  var intStat = State.getVar("$int")+ "%";
+  $("#int-stat").attr("style", "width: " + intStat);
+  
+});
+
+$(document).on(":passagedisplay", function(){
+  
+  var strStat = State.getVar("$str")+ "%";
+  $("#str-stat").attr("style", "width: " + strStat);
+  
+});
+
+$(document).on(":passagedisplay", function(){
+  
+  var magStat = State.getVar("$mag")+ "%";
+  $("#mag-stat").attr("style", "width: " + magStat);
+  
+});
+
+/*RELATIONSHIP BAR*/
+
+$(document).on(":passagedisplay", function(){
+  
+  var npcStat = State.getVar("$npcLove")+ "%";
+  $("#npcLove").attr("style", "width: " + npcStat);
+  
+});
+
+
+
+$(document).on(":passageend", function() {
+		$("#story-menu li a").on("click", function() {
+		$("header").toggleClass("toggled");
+			
+    var header = $("header");
+		
+		if(header.hasClass("toggled")) {
+      $("#menu-toggle").html('<i class="fas fa-chevron-up"></i>');
+    } else {
+      $("#menu-toggle").html('<i class="fas fa-chevron-down"></i>')
+    }
+	});
+});
+
+// CHANGE FONT FAMILY
+var settingFontFamily = ["Sans-Serif", "Serif", "Open Dyslexic"];
+var setFont = function() {
+	var passages = document.getElementById("passages");
+	switch (settings.fontFamily) {
+		case "Sans-Serif":
+			passages.style.fontFamily = "'Poppins', sans-serif";
+			break;
+	}
+	switch (settings.fontFamily) {
+		case "Serif":
+			passages.style.fontFamily = "'Merriweather', serif";
+			break;
+	}
+	switch (settings.fontFamily) {
+		case "Open Dyslexic":
+			passages.style.fontFamily = "'OpenDyslexic', serif";
+			break;
+	}
+};
+
+Setting.addList("fontFamily", {
+	label		: "Change font",
+	list		: settingFontFamily,
+	onInit		: setFont,
+	onChange	: setFont
+});
+
+// CHANGE FONT SIZE
+var settingFontSize = ["16px", "18px", "20px", "22px", "24px"];
+var setFontSize = function() {
+	switch (settings.fontSize) {
+		case "16px":
+			passages.style.fontSize = "16px";
+			break;
+	}
+	switch (settings.fontSize) {
+		case "18px":
+			passages.style.fontSize = "18px";
+			break;
+	}
+	switch (settings.fontSize) {
+		case "20px":
+			passages.style.fontSize = "20px";
+			break;
+	}
+	switch (settings.fontSize) {
+		case "22px":
+			passages.style.fontSize = "22px";
+			break;
+	}	
+	switch (settings.fontSize) {
+		case "24px":
+			passages.style.fontSize = "24px";
+			break;
+	}
+};
+
+Setting.addList("fontSize", {
+	label		: "Change font size",
+	list		: settingFontSize,
+	onInit		: setFontSize,
+	onChange	: setFontSize
+});
+
+// CHANGE THEME
+var themeList = ["Light Theme", "Dark Theme"];
+var setTheme = function() {
+			$(':root').css('--white', '#ffffff');
+			$(':root').css('--black', '#111');
+	
+	switch(settings.theme) {
+		case "Dark Theme":
+			$(':root').css('--white', '#111');
+			$(':root').css('--black', '#ffffff');
+
+			break;
+	}
+};
+
+Setting.addList("theme", {
+	label			: "Change theme",
+	list			: themeList,
+	onInit		:	setTheme,
+	onChange	: setTheme
+});
+
+// notify.min.js, for SugarCube 2, by Chapel
+// v1.1.1, 2021-04-20, 53d1a20e9321b3782a303cf7dbe00f5c51e947db
+;!function(){var s=/\d+m?s$/;function e(s,e,t){"string"==typeof s&&("number"!=typeof e&&(e=!1),$(document).trigger({type:":notify",message:s,delay:e,class:t||""}))}$(document.body).append("<div id='notify'></div>"),$(document).on(":notify",(function(s){s.message&&"string"==typeof s.message&&(s.message.trim(),s.class?"string"==typeof s.class?s.class="open macro-notify "+s.class:Array.isArray(s.class)?s.class="open macro-notify "+s.class.join(" "):s.class="open macro-notify":s.class="open macro-notify",s.delay?("number"!=typeof s.delay&&(s.delay=Number(s.delay)),Number.isNaN(s.delay)&&(s.delay=2e3)):s.delay=2e3,$("#notify").empty().wiki(s.message).addClass(s.class),setTimeout((function(){$("#notify").removeClass()}),s.delay))})),Macro.add("notify",{tags:null,handler:function(){var t=this.payload[0].contents,a=!1,n=!1;if(this.args.length>0){var i=s.test(this.args[0]);"number"==typeof this.args[0]||i?(a=i?Util.fromCssTime(this.args[0]):this.args[0],n=this.args.length>1&&this.args.slice(1).flatten()):n=this.args.flatten().join(" ")}e(t,a,n)}}),setup.notify=e}();
+// end notify.min.js
+
+
+// PRONOUN TEMPLATE
+(function () {
+    'use strict';
+    // v1.1.0; by Chapel, for SugarCube 2 (>= v2.29.0)
+
+    if (!Template || !Template.add || typeof Template.add !== 'function') {
+        alert('Warning, this version of SugarCube does not include the Template API. Please upgrade to v2.29.0 or higher.');
+        return;
+    }
+
+    // CONFIGURATION
+
+    var config = {
+        name : 'gender',
+        showSetting : true,
+        label : 'Gender',
+        desc : '',
+        storyVar : '%%gender',
+        default : 'female' // female, male, or other
+    };
+
+    // DATA
+
+    // the point-replace id
+    var settingID = '#setting-control-' + config.name;
+
+    // preset pronoun map
+    var genderMap = {
+        subjective : ['she', 'he', 'they'],
+        objective : ['her', 'him', 'them'],
+        possessive : ['hers', 'his', 'theirs'],
+        determiner : ['her', 'his', 'their'],
+        reflexive : ['herself', 'himself', 'themself'],
+        noun : ['woman', 'man', 'person']
+    };
+
+    // INTERNAL FUNCTIONS
+
+    // custom dialog function
+    function createDialog (name, element, classes) {
+        var reopen = false;
+        if (Dialog.isOpen() && $('#ui-dialog-body').hasClass('settings')) {
+            reopen = true;
+        }
+        Dialog.close();
+        Dialog.setup(name, (reopen) ? classes + ' reopen' : classes);
+        Dialog.append(element);
+        Dialog.open();
+    }
+
+    function genderForm () { // create a form for users to configure their pronouns
+        var $wrapper = $(document.createElement('div'));
+
+        function createInput (label, name, def) { // create text inputs
+            return $(document.createElement('label'))
+                .append(label)
+                .css('display', 'block')
+                .append($(document.createElement('input'))
+                    .attr({
+                        type : 'text',
+                        name : name
+                    })
+                    .css({
+                        float : 'right',
+                        'margin-left' : '0.2em'
+                    })
+                    .val(def)
+                );
+        }
+
+        function createDropdown (label, name, list) { // create dropdowns
+            var $select = $(document.createElement('select'))
+                .attr('name', name)
+                .css('float', 'right');
+            list.forEach( function (opt, idx) {
+                console.log(idx);
+                $(document.createElement('option'))
+                    .attr('value', String(idx))
+                    .append(opt)
+                    .appendTo($select);
+            });
+            return $(document.createElement('label')).css('display', 'block').append(label, $select);
+        }
+
+        var $inputs = Object.keys(genderMap).map( function (key) {
+            // create an input for each type of pronoun
+            var idx = 2;
+            if (config.default === 'male') {
+                idx = 1;
+            } else if (config.default === 'female') {
+                idx = 0;
+            }
+            var sv = State.variables;
+            var def = genderMap[key][idx];
+            if (sv[config.storyVar] && sv[config.storyVar][key]) {
+                def = sv[config.storyVar][key];
+            }
+            return createInput(key.toUpperFirst() + ': ', 'gender-' + key, def);
+        });
+
+        var $presets = createDropdown('Presets: ', 'gender-preset', ['She/Her', 'He/Him', 'They/Them'])
+            .on('change', function () {
+                // auto-fill text inputs when the preset is changed
+                var value = Number($(this).find('select').val());
+                if (!Number.isNaN(value)) {
+                    $inputs.forEach( function ($input) {
+                        var $text = $input.find('input');
+                        var type = $text.attr('name').split('-')[1];
+                        $text.val(genderMap[type][value]);
+                    });
+                }
+            });
+
+        var $select = $presets.find('select');
+        if (!State.variables[config.storyVar]) {
+            // set defaults
+            if (config.default === 'male') {
+                $select.val('1');
+            } else if (config.default === 'female') {
+                $select.val('0');
+            } else {
+                $select.val('2');
+            }
+        } else {
+            $select.val(''); // custom config, no preset
+        }
+        
+        var $confirm = $(document.createElement('button'))
+            .wiki('Confirm')
+            .addClass('gender-confirm')
+            .ariaClick({ label : 'Confirm pronoun selection.' }, function () {
+                // this button saves the pronoun config settings
+                var sv = State.variables;
+                sv[config.storyVar] = {};
+                $inputs.forEach( function ($input) {
+                    var $text = $input.find('input');
+                    var type = $text.attr('name').split('-')[1];
+                    sv[config.storyVar][type] = $text.val().trim().toLowerCase();
+                });
+                // reopen the settings modal or close the modal
+                if ($('#ui-dialog-body').hasClass('reopen')) {
+                    UI.settings();
+                }
+                Dialog.close();
+            });
+
+        var $form = (function () {
+            // add some line breaks to the generated form
+            var $els = [$presets, '<br>'];
+            $inputs.forEach( function ($input) {
+                $els.push($input);
+                $els.push('<br>');
+            });
+            $els.push($confirm);
+            return $els;
+        }());
+
+        return $wrapper.append($form);
+
+    }
+
+    // CORE FUNCTIONS
+
+    function handleGender () {
+        // this function opens the custom modal
+        createDialog('Customize Gender', genderForm(), 'custom-gender');
+    }
+
+    function getFromPreset (n) {
+        // default
+        if (typeof n !== "number" || Number.isNaN(n) || n > 2 || n < 0) {
+            n = 0;
+        }
+        var ret = {};
+        Object.keys(genderMap).forEach( function (key) {
+            ret[key] = genderMap[key][n];
+        });
+        return ret;
+    }
+
+    function getGender () {
+        // get the player's gender (custom or grab the default)
+        // custom
+        if (State.variables[config.storyVar] && State.variables[config.storyVar].subjective) {
+            return State.variables[config.storyVar];
+        }
+        // default
+        return getFromPreset(config.default === 'male' ? 1 : 0);
+    }
+
+    function setPreset (gender) {
+        var pn;
+        switch (gender) {
+            case 'female':
+                pn = getFromPreset(0);
+                break;
+            case 'male':
+                pn = getFromPreset(1);
+                break;
+            default:
+                pn = getFromPreset(2);
+        }
+        State.variables[config.storyVar] = clone(pn);
+        return pn;
+    }
+
+    function setPronouns (obj) {
+        if (typeof obj !== 'object') {
+            return;
+        }
+        State.variables[config.storyVar] = setPreset(config.default === 'male' ? 1 : 0);
+        return Object.assign(State.variables[config.storyVar], obj);
+    }
+
+    // SETTINGS API
+
+    if (config.showSetting) {
+        Setting.addToggle(config.name, {
+            label : config.label,
+            desc : (config.desc && typeof config.desc === 'string' && config.desc.trim()) ? 
+                config.desc.trim() : undefined
+        });
+
+        $(document).on(':dialogopen :dialogopened', function () {
+            if ($('#ui-dialog-body').hasClass('settings')) {
+                $(settingID).parent('div').empty().append( $(document.createElement('button'))
+                    .append('Adjust')
+                    .ariaClick( function () {
+                        handleGender();
+                    })
+                );
+            }
+        });
+    }
+
+    // singular endings
+    var replaceWith_are = /^is$/i; // is
+    var replaceWith_were = /^was$/i; // was
+    var replaceWith_have = /^has$/i; // has
+    var replaceWith_o = /oes$/i; // does, goes
+    var replaceWith_ie = /^[dl]ies$/i; // dies
+    var replaceWith_y = /ies$/i; // dries
+    var remove_es = /sses$/i; // posesses
+    var remove_es2 = /hes$/i; // catches
+    var remove_s = /s$/i; // surpises, plays
+    // the above are tested in order; if none apply, return singular form (e.g: ran -> ran)
+
+    // test for 'they' pronoun
+    var hasThey = /they/i;
+
+    function makePlural (singular) {
+        if (!singular || typeof singular !== 'string') {
+            return singular;
+        }
+        singular = singular.trim();
+        if (replaceWith_are.test(singular)) {
+            return singular.replace(replaceWith_are, 'are');
+        }
+        if (replaceWith_were.test(singular)) {
+            return singular.replace(replaceWith_were, 'were');
+        }
+        if (replaceWith_have.test(singular)) {
+            return singular.replace(replaceWith_have, 'have');
+        }
+        if (replaceWith_o.test(singular)) {
+            return singular.replace(replaceWith_o, 'o');
+        }
+        if (replaceWith_ie.test(singular)) {
+            // need to use replaceWith_y regex here.
+            return singular.replace(replaceWith_y, 'ie');
+        }
+        if (replaceWith_y.test(singular)) {
+            return singular.replace(replaceWith_y, 'y');
+        }
+        if (remove_es.test(singular)) {
+            return singular.replace(remove_es, 'ss');
+        }
+        if (remove_es2.test(singular)) {
+            return singular.replace(remove_es2, 'h');
+        }
+        if (remove_s.test(singular)) {
+            return singular.replace(remove_s, '');
+        }
+        return singular;
+    }
+
+    function _getPronounsArePlural () {
+        return hasThey.test(getGender().subjective.trim());
+    }
+
+    // usage: pluralize('dries', null, true) -> dry; pluralize('supresses', 'supress') -> supresses
+    function pluralize (singular, plural, forcePlural) {
+        if (!forcePlural) {
+            return singular;
+        }
+        if (plural && typeof plural === 'string') {
+            return plural;
+        }
+        return makePlural(singular);
+    }
+
+    // TEMPLATES
+
+    function isUpper (name, string) {
+        // is name is uppercase, return uppercased string
+        if (name.first() === name.first().toUpperCase()) {
+            return string.toUpperFirst();
+        }
+        return string;
+    }
+    
+    Template.add(['he', 'she', 'they', 'He', 'She', 'They'], function () {
+        return isUpper(this.name, getGender().subjective);
+    });
+    Template.add(['him', 'her', 'them', 'Him', 'Her', 'Them'], function () {
+        return isUpper(this.name, getGender().objective);
+    });
+    Template.add(['his', 'hers', 'theirs', 'His', 'Hers', 'Theirs'], function () {
+        return isUpper(this.name, getGender().possessive);
+    });
+    Template.add(['his_', 'her_', 'their', 'His_', 'Her_', 'Their'], function () {
+        return isUpper(this.name, getGender().determiner);
+    });
+    Template.add(['himself', 'herself', 'themself', 'Himself', 'Herself', 'Themself'], function () {
+        return isUpper(this.name, getGender().reflexive);
+    });
+    Template.add(['man', 'woman', 'person', 'Man', 'Woman', 'Person'], function () {
+        return isUpper(this.name, getGender().noun);
+    });
+    Template.add(['he-s', 'she-s', 'they-re', 'He-s', 'She-s', 'They-re'], function () {
+        return isUpper(this.name, getGender().subjective + pluralize("&apos;s", "&apos;re", _getPronounsArePlural()));
+    });
+
+    // MACRO
+
+    // `<<pronouns>>` -> opens the modal for pronoun configuration, probably best paired with a link
+    Macro.add('pronouns', {
+        skipArgs : true,
+        handler : function () {
+            handleGender();
+        }
+    });
+
+    // <<verb singular [plural] [makePlural]>>
+    Macro.add('verb', {
+        handler: function () {
+            var pl = _getPronounsArePlural();
+
+            if (this.args.length < 1) {
+                return this.error('Please pass at least a singular third person pronoun to this macro.');
+            }
+
+            if (this.args.includes('plural')) {
+                pl = true;
+            }
+
+            this.output.append(pluralize(String(this.args[0]), (this.args[1]) ? String(this.args[1]) : null, !!pl));
+        }
+    });
+
+    // JAVASCRIPT API
+
+    setup.gender = {
+        // get the pronoun object; `setup.gender.pronouns().subjective` -> get `he`, `she`, etc
+        pronouns : getGender,
+        // set pronouns from presets or manually
+        setPronouns : function (presetOrObj) {
+            if (typeof presetOrObj === 'string') {
+                return setPreset(presetOrObj);
+            }
+            if (typeof presetOrObj === 'object') {
+                return setPronouns(presetOrObj);
+            }
+        },
+        // open the pronoun config modal from JS; `setup.gender.dialog()`
+        dialog : handleGender,
+        // pluralizer function
+        pluralize : makePlural
+    };
+
+    window.gender = window.gender || setup.gender;
+
+}());
+
+
+// Simple Inventory, for SugarCube 2, by Chapel
+// v3.0.0-beta1, 2022-07-25, 19f255d958852e55a8a3afcde5c53331f0d938e8
+;"use strict";function _typeof(t){return _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},_typeof(t)}function _classCallCheck(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function _defineProperties(t,e){for(var n=0;n<e.length;n++){var i=e[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(t,i.key,i)}}function _createClass(t,e,n){return e&&_defineProperties(t.prototype,e),n&&_defineProperties(t,n),Object.defineProperty(t,"prototype",{writable:!1}),t}!function(){var t={description:"",handler:null,displayName:"",consumable:!0,unique:!1,permanent:!1},e=new Map,n=function(){function n(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"",i=arguments.length>1&&void 0!==arguments[1]?arguments[1]:clone(t),r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:[];if(_classCallCheck(this,n),!e||"string"!=typeof e)throw new Error("invalid item ID");if("object"!==_typeof(i))throw new Error("invalid item definition");Object.assign(this,Object.assign(t,i)),this.id=e,this.tags=r instanceof Array?r:"string"==typeof r?[r]:[]}return _createClass(n,[{key:"name",get:function(){return this.displayName||this.id},set:function(t){this.displayName=t}},{key:"use",value:function(){return"string"==typeof this.handler?$.wiki(this.handler):"function"==typeof this.handler&&this.handler(this),this}},{key:"inspect",value:function(){return Dialog.setup(this.name,"simple-inventory item-description"),Dialog.wiki(this.description),Dialog.open(),this}}],[{key:"is",value:function(t){return t instanceof n}},{key:"add",value:function(t,i,r){var a=new n(t,i,r);return e.set(t,a),a}},{key:"get",value:function(t){return e.get(t)}},{key:"has",value:function(t){return e.has(t)}},{key:"list",get:function(){return e}}]),n}();setup.Item=n,window.Item=window.Item||n}(),function(){var t=setup.Item,e=!1,n="&hellip;",i={inspect:"Inspect",use:"Use",drop:"Drop",stack:"stack",take:"Take",give:"Give",stackPre:"&nbsp;&times;&nbsp;",stackPost:"&nbsp;"},r={};function a(e){return t.has(e)&&t.get(e).unique}function s(e){return t.has(e)&&t.get(e).permanent}function o(t){return t&&"string"==typeof t&&t.trim()}var u=function(){function u(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:[];_classCallCheck(this,u),this.data=clone(t),this.tags=e instanceof Array?e:"string"==typeof e?[e]:[]}return _createClass(u,[{key:"emit",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};return u.emit(t,this,e),this}},{key:"array",get:function(){var t=this,e=[];return Object.keys(this.data).forEach((function(n){if(e.push(n),t.data[n]>1)for(var i=1;i<t.data[n];i++)e.push(n)})),e}},{key:"list",get:function(){return Object.keys(this.data)}},{key:"length",get:function(){return this.array.length}},{key:"uniqueLength",get:function(){return this.list.length}},{key:"table",get:function(){return this.data}},{key:"count",value:function(t){return t?this.data[t]||0:this.length}},{key:"has",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:1;return this.data[t]>=e}},{key:"hasAll",value:function(){var t=this,e=[].slice.call(arguments).flat(1/0);return e.every((function(e){return t.has(e)}))}},{key:"hasAny",value:function(){var t=this,e=[].slice.call(arguments).flat(1/0);return e.some((function(e){return t.has(e)}))}},{key:"compare",value:function(t){var e=this,n=u.itemset(t);return Object.keys(n).every((function(t){return e.has(t,n[t])}))}},{key:"merge",value:function(t){var e=this,n=u.itemset(t);return Object.keys(n).forEach((function(t){u.change(e,t,n[t])})),n}},{key:"unmerge",value:function(t){var e=this,n={},i=u.itemset(t);return Object.keys(i).forEach((function(t){e.has(t,i[t])?n[t]=i[t]:e.has(t)&&(n[t]=e.count(t)),u.change(e,t,i[t],!0)})),n}},{key:"pickup",value:function(){var t=this.merge(u.parseArgList.apply(null,arguments));return this.emit("update",{delta:t}),this}},{key:"drop",value:function(){var t=this.unmerge(u.parseArgList.apply(null,arguments));return this.emit("update",{delta:t}),this}},{key:"empty",value:function(){var t=clone(this.data);return this.data={},this.emit("update",{delta:t}),this}},{key:"transfer",value:function(t){var e=u.parseArgList.apply(null,[].slice.call(arguments).slice(1));if(!u.is(t))throw new TypeError("target inventory is not an inventory instance");var n=this.unmerge(e);return t.merge(n),this.emit("update",{target:t,delta:n}),this}},{key:"isEmpty",value:function(){return 0===this.length}},{key:"iterate",value:function(t){var e=this;return"function"!=typeof t||this.list.forEach((function(n){t(n,e.data[n])})),this}},{key:"use",value:function(e){if(t.has(e)){var n=t.get(e);if(n.use(),n.consumable){u.change(this,e,1,!0);var i={};i[e]=1,this.emit("update",{delta:i})}return this.emit("use",{item:n}),this}}},{key:"clone",value:function(){return new u(this.data||{},this.tags||[])}},{key:"toJSON",value:function(){return JSON.reviveWrapper("new setup.Inventory("+JSON.stringify(this.data)+", "+JSON.stringify(this.tags)+")")}}],[{key:"confirm",get:function(){return e},set:function(t){e="string"==typeof t&&"all"===t.trim().toLowerCase()?"all":"string"==typeof t&&"stack"===t.trim().toLowerCase()?"stack":!!t}},{key:"emptyMessage",get:function(){return n},set:function(t){"string"==typeof t&&(n=t)}},{key:"strings",get:function(){return Object.assign(clone(i),r)},set:function(t){"object"===_typeof(t)&&(r=Object.assign(r,clone(t)))}},{key:"change",value:function(t,e){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:1,i=arguments.length>3&&void 0!==arguments[3]&&arguments[3];if(0!==n){if(t instanceof u&&(t=t.data),"object"!==_typeof(t)){if(t)throw new TypeError("cannot access inventory data");t={}}if(!o(e))throw new TypeError("invalid item name/id");if("number"==typeof n&&!Number.isNaN(n)&&Number.isInteger(n)||(n=1),i&&(n*=-1),n>0){if(Object.keys(t).includes(e)&&a(e))return;Object.keys(t).includes(e)||(t[e]=0),t[e]+=n}else{if(s(e))return;Object.keys(t).includes(e)&&"number"==typeof t[e]&&(t[e]+=n),t[e]<=0&&delete t[e]}return t}}},{key:"itemset",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};if(u.is(t)&&(t=t.data),"object"!==_typeof(t))return{};var e={};return Object.keys(t).forEach((function(n){"number"==typeof t[n]&&Number.isInteger(t[n])&&0!==t[n]&&(e[n]=t[n])})),e}},{key:"parseArgList",value:function(){var t=[].slice.call(arguments).flat(1/0);if(t.length%2!=0)throw new Error("item sets should be pairs of item IDs and numbers");var e={};return t.forEach((function(n,i){i%2==0&&(e[n]=t[i+1])})),e}},{key:"is",value:function(t){return t instanceof u}},{key:"emit",value:function(t,e){var n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{};$(document).trigger(Object.assign({type:":inventory-"+t+".simple-inventory",inventory:e,target:null,delta:{},item:null},n))}},{key:"create",value:function(t,e){return new u(t,e)}}]),u}();setup.Inventory=u,window.Inventory=window.Inventory||u}(),function(){var t=setup.Item,e=setup.Inventory;function n(e){return t.has(e)&&t.get(e).permanent}function i(t){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null,i=arguments.length>2&&void 0!==arguments[2]&&arguments[2],r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:"Alert",a=arguments.length>4&&void 0!==arguments[4]?arguments[4]:"Are you sure?";if(!t||"function"!=typeof t)throw new Error("Invalid confirmation callback!");if(e.confirm)if("all"!==e.confirm||"all"===i)if("stack"!==e.confirm||i){var s={display:"inline-block",float:"right"},o=$(document.createElement("div")),u=$(document.createElement("p")).append(a),l=$(document.createElement("div")).addClass("confirmation-buttons"),c=$(document.createElement("button")).append("Okay").addClass("confirm-yes").css(Object.assign(s,{"margin-right":"0.5rem"})),d=$(document.createElement("button")).append("Cancel").addClass("confirm-no").css(s);t&&"function"==typeof t&&c.ariaClick(t),n&&"function"==typeof n&&d.ariaClick(n),l.append(d,c),o.append(u,l),Dialog.setup(r,"simple-inventory confirmation"),Dialog.append(o),Dialog.open()}else t();else t();else t()}function r(t){var e=$(document.createElement("span")).addClass("spacer");return t&&e.wiki(""+t),e}function a(n,i,r){var a=arguments.length>3&&void 0!==arguments[3]&&arguments[3];return r=r||e.strings.inspect,$(document.createElement(a?"button":"a")).addClass("inspect-link").wiki(""+r).ariaClick((function(){t.get(i).inspect()}))}function s(t,n,i){var r=arguments.length>3&&void 0!==arguments[3]&&arguments[3];return i=i||e.strings.use,$(document.createElement(r?"button":"a")).addClass("use-link").wiki(""+i).ariaClick((function(){t.use(n)}))}function o(t,n,r){var a=arguments.length>3&&void 0!==arguments[3]&&arguments[3],s=arguments.length>4&&void 0!==arguments[4]?arguments[4]:null;return r=r||(s?e.strings.give:e.strings.drop),$(document.createElement(a?"button":"a")).addClass("drop-link").wiki(""+r).ariaClick((function(){i((function(){s&&e.is(s)?t.transfer(s,n,1):t.drop(n,1),Dialog.close()}),(function(){Dialog.close()}))}))}function u(t,n,r){var a=arguments.length>3&&void 0!==arguments[3]&&arguments[3],s=arguments.length>4&&void 0!==arguments[4]?arguments[4]:null;return r=r||(s?e.strings.give:e.strings.drop)+"&nbsp;"+e.strings.stack,$(document.createElement(a?"button":"a")).addClass("stack-link drop-link").wiki(""+r).ariaClick((function(){i((function(){s&&e.is(s)?t.transfer(s,n,t.count(n)):t.drop(n,t.count(n)),Dialog.close()}),(function(){Dialog.close()}))}))}function l(t,n){var r=arguments.length>2&&void 0!==arguments[2]&&arguments[2],a=arguments.length>3&&void 0!==arguments[3]?arguments[3]:null;return n=n||(a?e.strings.give:e.strings.drop),$(document.createElement(r?"button":"a")).addClass("all-link drop-link").wiki(n+" all").ariaClick((function(){t.isEmpty()||i((function(){a&&e.is(a)?(a.merge(t),t.empty()):t.empty(),Dialog.close()}),(function(){Dialog.close()}),!0)}))}function c(t,n,i,r){return i=i||e.strings.stackPre,r=r||e.strings.stackPost,$(document.createElement("span")).addClass("item-count").append(""+i+(t.count(n)||0)+r)}function d(i){var d,f=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{description:!0,use:!0,transfer:null,drop:!0,all:!0,stack:!0,dropActionText:"",classes:""},p=$(document.createElement("ul")).addClass("simple-inventory-list");if(i.length){if(d=i.list.map((function(l){var d=[];return f.description&&t.has(l)&&t.get(l).description?d.push(a(i,l,t.has(l)?t.get(l).name:l)):d.push($(document.createElement("span")).append(t.has(l)?t.get(l).name:l).addClass("item-name")),d.push(c(i,l)),f.use&&t.has(l)&&t.get(l).handler?d.push(s(i,l)):d.push(r()),(f.transfer&&e.is(f.transfer)||f.drop)&&!n(l)?(d.push(o(i,l,f.dropActionText,!1,f.transfer||null)),i.count(l)>1&&f.stack?d.push(u(i,l,f.dropActionText+"&nbsp;"+e.strings.stack,!1,f.transfer||null)):d.push(r())):d.push(r()),$(document.createElement("li")).append(d).addClass("simple-inventory-listing")})),f.all){var h=$(document.createElement("li")).addClass("all-listing simple-inventory-listing").append([r("&mdash;"),r(),r(),l(i,f.dropActionText,!1,f.transfer||null)]);d.push(h)}}else d=$(document.createElement("li")).addClass("simple-inventory-listing").append($(document.createElement("span")).wiki(e.emptyMessage));return p.append(d),p}e.prototype.interface=function(){var t,e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null,i=this,r=$(document.createElement("div")).addClass("simple-inventory-wrapper");return r.append(d(this,e)),$(document).on(":inventory-update.simple-inventory.gui-built-in",(function(){r.length?r.empty().append(d(i,e)):$(document).off(":inventory-update.simple-inventory.gui-built-in")})),n&&n instanceof $?t=n:n&&(t=$(n)),t&&r.appendTo(t),r}}(),function(){setup.Inventory,setup.Item;var t=".simple-inventory-userland",e=":inventory-update.simple-inventory"+t,n=":inventory-use.simple-inventory"+t;function i(t){return t&&"function"==typeof t}Object.assign(setup.Inventory,{events:{update:{on:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null,n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"";i(t)&&$(document).on(e+n,t)},one:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null,n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"";i(t)&&$(document).one(e+n,t)},off:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"";$(document).off(e+t)}},use:{on:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"";i(t)&&$(document).on(n+e,t)},one:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"";i(t)&&$(document).one(n+e,t)},off:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"";$(document).off(n+t)}}}})}(),function(){var t=function(t){if(!Story.has(t))return{};var e,n,i,r,a=(e=Story.get(t).text,i=function(t){return t.replace(/\r+/g,"\n").replace(/\n+/,"\n").replace(/ +/g," ").trim().split(/\n/g)}(e),r={},i.forEach((function(t){var e=function(t,e){return e=e||":",t.trim().split(e)}(t,n);r[e[0].trim()]=e[1].trim()})),r);return a}("inventory.strings");t.empty&&"string"==typeof t.empty&&t.empty.trim()&&(setup.Inventory.emptyMessage=t.empty,delete t.empty),setup.Inventory.strings=t||{}}(),function(){var t=setup.Item,e=setup.Inventory;function n(t){return t&&"string"==typeof t&&t.length>2&&("$"===t[0]||"_"===t[0])}function i(t){if(n(t)&&(t=State.getVar(t)),e.is(t))return t}Macro.add(["item","consumable"],{tags:["description","tags","unique","permanent"],handler:function(){var e,n,i,r,a=null,s=!1,o=!1,u=!1;if(State.length>0)return this.error("items must be defined in `StoryInit` or story JavaScript!");if(!this.args[0]||"string"!=typeof this.args[0]||!this.args[0].trim())return this.error("invalid item ID");if(e=this.args[0].trim(),"consumable"===this.name&&(a=this.payload[0].contents||null,s=!0),this.args[1]&&(n=this.args[1]),this.payload.length>1){var l=this.payload.find((function(t){return"description"===t.name})),c=this.payload.find((function(t){return"tags"===t.name})),d=this.payload.find((function(t){return"unique"===t.name})),f=this.payload.find((function(t){return"permanent"===t.name}));l&&(i=l.contents.trim()),c&&(r=c.args.flat(1/0)),d&&(o=!0),f&&(u=!0)}t.add(e,{displayName:n||"",description:i||"",handler:a,consumable:s,unique:o,permanent:u},r)}}),Macro.add("newinv",{handler:function(){var t=this.args.raw.trim().split(" ").first().replace(/["']/g,"").trim();if(!n(t))return this.error("argument must be a story or temporary variable!");State.setVar(t,new e({},this.args.flat(1/0).slice(1)))}}),Macro.add(["pickup","drop"],{handler:function(){var t=i(this.args[0]);return t?this.args.length<3?this.error("no items to pick up were provided"):void t[this.name](this.args.slice(1)):this.error("first argument must be a valid inventory!")}}),Macro.add("dropall",{handler:function(){var t=i(this.args[0]);if(!t)return this.error("first argument must be a valid inventory!");t.empty()}}),Macro.add(["transfer","merge","unmerge"],{handler:function(){var t=i(this.args[0]);if(!t)return this.error("first argument must be a valid inventory!");var e=i(this.args[1]);if(!e)return this.error("second argument must be a valid inventory!");if("transfer"===this.name){if(this.args.length<4)return this.error("no items to transfer were provided");t.transfer(e,this.args.slice(2))}else t[this.name](e)}}),Macro.add(["inv","take","give"],{handler:function(){var t=null,n=i(this.args[0]);if(!n)return this.error("first argument must be a valid inventory!");this.args[1]&&i(this.args[1])&&(t=i(this.args[1]));var r={description:this.args.includesAny("inspect","description"),use:this.args.includes("use"),transfer:t,drop:this.args.includes("drop"),all:this.args.includes("all"),stack:this.args.includes("stack"),dropActionText:"inv"===this.name?"Drop":e.strings[this.name.trim().toLowerCase()],classes:"macro-".concat(this.name)};n.interface(r,$(this.output))}})}(),function(){var t=setup.Item,e=setup.Inventory;function n(t,e,n){if("object"!==_typeof(e))throw new TypeError("the extension should be a plain generic object holding the properties and methods you want to add");Object.keys(e).forEach((function(i){if(t[i]&&!n)throw new Error('Cannot override existing property "'+i+'"!');t[i]=e[i]}))}Object.assign(e,{extend:function(t){var i=arguments.length>1&&void 0!==arguments[1]&&arguments[1];n(e,t,i)},extendPrototype:function(t){var i=arguments.length>1&&void 0!==arguments[1]&&arguments[1];n(e.prototype,t,i)}}),Object.assign(t,{extend:function(e){var i=arguments.length>1&&void 0!==arguments[1]&&arguments[1];n(t,e,i)},extendPrototype:function(e){var i=arguments.length>1&&void 0!==arguments[1]&&arguments[1];n(t.prototype,e,i)}})}();
+// End Simple Inventory
+
+//Click to Proceed
+
+(function () {
+	"use strict";
+
+	$(document).on(":passageinit", () => {
+		CTP.Logs.forEach((_, id) => {
+			if (!CTP.Repository.get(id)?.persist) CTP.Logs.delete(id);
+		});
+		CTP.Repository.forEach(({ persist }, id) => {
+			if (!persist) CTP.Repository.delete(id);
+		});
+	});
+
+	window.CTP = class CTP {
+		constructor(id, persist = false) {
+			this.stack = [];
+			this.clears = [];
+			this.options = {};
+			if (!id?.trim()) throw new Error(`No ID specified!`);
+			this.id = id;
+			this.persist = persist;
+			CTP.Repository.set(id, this);
+		}
+
+		static get Repository() {
+			if (!setup["@CTP/Repository"]) setup["@CTP/Repository"] = new Map();
+			return setup["@CTP/Repository"];
+		}
+
+		static get Logs() {
+			if (!variables()["@CTP/Logs"]) variables()["@CTP/Logs"] = new Map();
+			return variables()["@CTP/Logs"];
+		}
+
+		get log() {
+			if (!CTP.Logs.get(this.id)) CTP.Logs.set(this.id, { lastClear: -1, index: -1, seen: -1 });
+			return CTP.Logs.get(this.id);
+		}
+
+		static getCTP(id) {
+			return CTP.Repository.get(id);
+		}
+
+		add(content, options = {}) {
+			options = {
+				...this.options,
+				...options
+			};
+			if (options.clear) this.clears.push(this.stack.length);
+			this.stack.push({
+				options, content,
+				index: this.stack.length,
+				element: $()
+			});
+			return this;
+		}
+
+		print(index) {
+			const { content, options: iOpts } = this.stack[index];
+			const options = {
+				...this.options,
+				...iOpts
+			};
+			const element = $(document.createElement(options.element || "span"))
+				.addClass("--macro-ctp-hidden")
+				.attr({
+					"data-macro-ctp-id": this.id,
+					"data-macro-ctp-index": index,
+				})
+				.on("update-internal.macro-ctp", (event, firstTime) => {
+					if ($(event.target).is(element)) {
+						if (index === this.log.index) {
+							if (firstTime) {
+								if (typeof content === "string") element.wiki(content);
+								else element.append(content);
+								element.addClass(options.transition ? "--macro-ctp-t8n" : "");
+							}
+							element.removeClass("--macro-ctp-hidden");
+						} else {
+							if (index < this.log.seen) element.removeClass("--macro-ctp-t8n");
+							element.toggleClass("--macro-ctp-hidden", index > this.log.index || index < this.log.lastClear);
+						}
+					}
+				});
+			this.stack[index].element = element;
+			return element;
+		}
+
+		output() {
+			const wrapper = document.createDocumentFragment();
+			for (let i = 0; i < this.stack.length; i++) {
+				this.print(i).appendTo(wrapper);
+			}
+			return wrapper;
+		}
+
+		advance() {
+			if (this.log.index < this.stack.length - 1) {
+				this.log.index++;
+				const firstTime = this.log.index > this.log.seen;
+				this.log.seen = Math.max(this.log.seen, this.log.index);
+				this.log.lastClear = this.clears.slice().reverse().find(el => el <= this.log.index) ?? -1;
+				$(document).trigger("update.macro-ctp", ["advance", this.id, this.log.index]);
+				this.stack.forEach(({ element }) => element.trigger("update-internal.macro-ctp", [firstTime, "advance", this.id, this.log.index]));
+			}
+			return this;
+		}
+
+		back() {
+			if (this.log.index > 0) {
+				this.log.index--;
+				this.log.lastClear = this.clears.slice().reverse().find(el => el <= this.log.index) ?? -1;
+				$(document).trigger("update.macro-ctp", ["back", this.id, this.log.index]);
+				this.stack.forEach(({ element }) => element.trigger("update-internal.macro-ctp", [false, "back", this.id, this.log.index]));
+			}
+			return this;
+		}
+	}
+
+	Macro.add("ctp", {
+		tags: ["ctpNext"],
+		handler() {
+			const id = this.args[0];
+			const persist = this.args.slice(1).includes("persist");
+			const ctp = new CTP(id, persist);
+			const _passage = passage();
+			this.payload.forEach(({ args, name, contents }) => {
+				const options = {};
+				if (args.includes("clear")) options.clear = true;
+				if (args.includesAny("t8n", "transition")) options.transition = true;
+				const elementArg = (args.find((el) => el.startsWith("element:")) ?? "");
+				if (elementArg) options.element = elementArg.replace("element:", "");
+				if (name === "ctp") ctp.options = { ...options };
+				ctp.add(contents, options);
+			});
+			$(this.output).append(ctp.output());
+			$(document).one(":passagedisplay", () => {
+				if (_passage === passage()) {
+					const i = Math.max(ctp.log.index, 0);
+					ctp.log.index = -1;
+					ctp.log.seen = -1;
+					while (ctp.log.index < i) ctp.advance();
+				}
+			});
+		}
+	});
+
+	Macro.add("ctpAdvance", {
+		handler() {
+			const id = this.args[0];
+			if (id) {
+				const ctp = CTP.getCTP(id);
+				if (ctp) ctp.advance();
+				else throw new Error(`No CTP with ID '${id}' found!`);
+			} else throw new Error(`No ID specified!`);
+		}
+	});
+
+	Macro.add("ctpBack", {
+		handler() {
+			const id = this.args[0];
+			if (id) {
+				const ctp = CTP.getCTP(id);
+				if (ctp) ctp.back();
+				else throw new Error(`No CTP with ID '${id}' found!`);
+			} else throw new Error(`No ID specified!`);
+		}
+	});
+})();
+
+//End Click to Proceed
+
+:: StoryStylesheet [stylesheet]
+@charset "UTF-8";
+
+:root {
+  /*--color1: #e56c39;
+  --color2: #f2a665;
+  --color3: #f18678;*/
+  --color1: #94bbe9;
+  --color2: #9793c8;
+  --color3: #eeaeca;
+  --color4: #771035;
+  --color5: #b84c71;
+  --color6: #d578a0;
+  --white: #eee;
+  --black: #111;
+  --titlefont: "NewYork";
+  --subtitlefont: "Quicksand";
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "NewYork";
+  src: url(fonts/NewYork.otf);
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url(fonts/OpenDyslexic-Regular.otf) format("opentype");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url(fonts/OpenDyslexic-Italic.otf) format("opentype");
+  font-style: italic;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url(fonts/OpenDyslexic-BoldItalic.otf) format("oopentypet");
+  font-style: italic;
+  font-weight: 700;
+}
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url(fonts/OpenDyslexic-Bold.otf) format("opentype");
+  font-style: normal;
+  font-weight: 700;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  margin: 0;
+  color: var(--black);
+  background-color: var(--white);
+  font-family: "Poppins", sans-serif;
+}
+
+.fab, .fas {
+  padding: 2px;
+}
+
+a, a:link, a:visited, a:active {
+  color: var(--color1);
+}
+
+a, a:link, a:visited, a:active, a:hover {
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+}
+
+i:hover {
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+}
+
+select {
+  color: var(--color1);
+  border: 1px solid var(--color2);
+  padding: 2px;
+  background-color: var(--white);
+}
+
+textarea {
+  background-image: linear-gradient(150deg, var(--color1), var(--color2), var(--color3));
+  color: var(--white);
+  resize: none;
+  width: 100%;
+  border: 1px solid var(--color2);
+  padding: 5px;
+  min-width: 100%;
+}
+
+input[type=text] {
+  border: 1px solid var(--color2);
+  padding: 5px;
+  margin: 5px 0;
+  min-width: auto;
+  color: inherit;
+  background-color: var(--white);
+}
+
+input:not(:disabled):focus, input:not(:disabled):hover, select:not(:disabled):focus, select:not(:disabled):hover, textarea:not(:disabled):focus, textarea:not(:disabled):hover {
+  background-color: transparent;
+  border-color: var(--color2);
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+button {
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  background-color: var(--white);
+  padding: 3px;
+  color: var(--color1);
+  border: 1px solid var(--color2);
+}
+
+ul {
+  list-style-type: none;
+}
+
+.decoration-i, .decoration-ii, .decoration-iii, .decoration-v {
+  position: fixed;
+  color: var(--white);
+  z-index: 21;
+}
+
+.decoration-i {
+  left: 10px;
+  top: 10px;
+}
+
+.decoration-ii {
+  left: 10px;
+  bottom: 10px;
+}
+
+.decoration-iii {
+  right: 10px;
+  top: 10px;
+}
+
+.decoration-v {
+  right: 10px;
+  bottom: 10px;
+}
+
+.decoration-separator {
+  color: var(--color2);
+  width: 100%;
+  text-align: center;
+  margin: 0rem 0;
+  font-size: 0.7rem;
+}
+.decoration-separator span {
+  margin: 0 5px;
+}
+
+#notify {
+  position: fixed;
+  display: block;
+  z-index: 5;
+  max-width: 50vw;
+  right: -50vw;
+  top: 17vh;
+  padding: 0.7rem;
+  background-image: linear-gradient(150deg, var(--color1), var(--color2), var(--color3));
+  color: var(--white);
+  text-align: center;
+  font-family: monospace;
+  border: 10px solid var(--white);
+  font-size: 1rem;
+  -webkit-transition: right 0.3s;
+  -moz-transition: right 0.3s;
+  -o-transition: right 0.3s;
+  transition: right 0.3s;
+}
+
+#notify.open {
+  right: 0;
+}
+
+.credit {
+  font-family: monospace;
+  color: var(--white);
+  font-size: 0.7rem;
+  position: absolute;
+  bottom: 17px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 5;
+}
+
+.credit a {
+  color: var(--white);
+  border-bottom: 1px solid var(--color2);
+  padding-bottom: 2px;
+}
+
+.credit a:hover {
+  padding-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+#main {
+  margin: 16vh auto 9vh;
+  position: relative;
+}
+
+#passage-loading-page {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(150deg, var(--color1), var(--color2), var(--color3));
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+}
+#passage-loading-page h1, #passage-loading-page h2, #passage-loading-page h3 {
+  color: var(--white);
+}
+#passage-loading-page h3 {
+  width: 100%;
+}
+#passage-loading-page .main {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#passage-loading-page nav {
+  width: 80%;
+  margin: 2rem auto;
+  text-align: center;
+  font-family: var(--subtitlefont);
+}
+#passage-loading-page .link-internal {
+  color: var(--white) !important;
+  margin: 0 5px;
+}
+#passage-loading-page .link-internal::before {
+  content: "✦";
+  font-size: 0.7rem;
+  margin-right: 10px;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 100vw;
+  height: fit-content;
+  min-height: 120px;
+  background-image: linear-gradient(150deg, var(--color1), var(--color2), var(--color3));
+  background-size: cover;
+  border-bottom: 10px solid var(--white);
+  overflow: scroll;
+}
+
+#header-top {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 40px 0;
+  min-height: 120px;
+}
+#header-top .social-media {
+  display: none;
+  letter-spacing: 1px;
+}
+#header-top .social-media a {
+  color: var(--white);
+  margin: 0 5px;
+}
+#header-top .middle {
+  text-align: center;
+  max-width: 80%;
+  color: var(--white);
+}
+#header-top .middle h1 {
+  font-family: var(--titlefont);
+  font-weight: normal;
+  letter-spacing: 1px;
+  color: var(--white);
+  font-size: 1.5em;
+  margin: 0;
+}
+#header-top .middle h2 {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: var(--white);
+  margin: 0;
+  font-family: "Kiona";
+}
+#header-top .middle #menu-toggle {
+  color: var(--white);
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 5px;
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+}
+#header-top .tools {
+  color: var(--white);
+  display: none;
+}
+#header-top .tools i {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.story-banner {
+  display: flex;
+  flex-direction: column;
+  outline: 1px solid var(--white);
+  outline-offset: 5px;
+  border: 1px solid var(--white);
+  border-radius: 50% 50% 0 0;
+  margin: 2rem auto;
+  text-align: center;
+  padding: 20px;
+  width: 300px;
+  min-height: 350px;
+}
+.story-banner .content {
+  margin: auto;
+  color: var(--white);
+}
+.story-banner .story-title {
+  color: var(--white);
+  font-weight: normal;
+  font-size: 2rem;
+  letter-spacing: 2px;
+  margin: 1rem 0 0;
+  font-family: var(--titlefont);
+}
+.story-banner i {
+  font-size: 2.6rem;
+  margin: 0.5rem 0 0;
+}
+.story-banner .story-subtitle {
+  color: var(--white);
+  font-weight: normal;
+  font-size: 0.9rem;
+  font-family: var(--subtitlefont);
+  letter-spacing: 2px;
+  margin: 0.7rem 0 0;
+}
+.story-banner span {
+  color: var(--white);
+  font-size: 0.8rem;
+  margin: 0.7rem 0 0.5rem;
+  display: inline-block;
+}
+.story-banner .story-author {
+  font-weight: normal;
+  color: var(--white);
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  margin: 0;
+}
+
+.logo-image img {
+  width: 100%;
+  max-width: 500px;
+}
+
+#header-body {
+  width: 100vw;
+  height: fit-content;
+  text-align: center;
+  display: none;
+  padding: 2rem 0;
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+}
+#header-body .content {
+  margin: auto;
+  width: 90%;
+}
+#header-body .tools {
+  font-size: 1rem;
+}
+#header-body .tools i {
+  color: var(--white);
+  margin: 0 5px;
+  cursor: pointer;
+}
+#header-body .social-media {
+  font-size: 1rem;
+}
+#header-body .social-media a {
+  color: var(--white);
+  margin: 0 5px;
+}
+#header-body #story-menu {
+  margin: 1.5rem auto;
+  padding: 0;
+  text-align: center;
+}
+#header-body #story-menu li {
+  display: inline-block;
+  margin: 5px;
+}
+#header-body #story-menu a::before {
+  content: "✦";
+  margin-right: 10px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.7rem;
+}
+#header-body #story-menu a {
+  color: var(--white);
+  font-size: 1rem;
+  font-family: var(--subtitlefont);
+}
+
+header.toggled {
+  height: 100vh;
+  border: 0;
+}
+
+header.toggled #header-top .title {
+  visibility: hidden;
+}
+
+header.toggled #header-body {
+  display: flex;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  z-index: 2;
+  background-image: linear-gradient(150deg, var(--color1), var(--color2), var(--color3));
+  width: 100vw;
+  height: 8vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+  border-top: 10px solid var(--white);
+}
+footer span {
+  margin: 0 1rem;
+  text-align: center;
+}
+footer i {
+  color: var(--white);
+  font-size: 140%;
+  padding: 0;
+  cursor: pointer;
+}
+footer i:hover {
+  text-shadow: 2px 2px 0px var(--color3);
+}
+
+#passages {
+  padding: 3rem 2rem;
+  line-height: 1.6;
+  text-align: justify;
+  /*.link-internal.macro-link {
+      background-image: -webkit-linear-gradient(150deg, $pink, $purple);
+      -webkit-background-clip: border-box;
+      -webkit-text-fill-color: var(--white);
+      padding: 7px 10px;
+      border-radius: 15px 15px 0 15px;
+  }
+
+  .link-internal.macro-link:hover {
+      margin: 0 0 0 1rem;
+  }*/
+}
+#passages u {
+  text-decoration: none;
+  border-bottom: 1px solid var(--color2);
+}
+#passages hr {
+  border: 1px solid var(--color2);
+}
+#passages ul {
+  padding: 0;
+}
+#passages li::before {
+  content: "✦";
+  color: var(--color3);
+  margin-right: 1rem;
+}
+#passages li {
+  padding: 0.5rem 0;
+}
+#passages .macro-cycle {
+  font-style: italic;
+}
+#passages .macro-cycle:hover {
+  color: var(--color2);
+}
+#passages li .link-internal:hover {
+  margin-left: 5px;
+}
+#passages .link-internal {
+  letter-spacing: 1px;
+  color: var(--color1);
+}
+#passages .link-internal:hover {
+  color: var(--color2);
+  letter-spacing: 2px;
+}
+#passages .link-internal.macro-button::before {
+  content: "✦";
+  margin-right: 1em;
+  font-size: 0.7em;
+}
+#passages .link-internal.macro-button::after {
+  content: "✦";
+  margin-left: 1em;
+  font-size: 0.7em;
+}
+#passages .link-internal.macro-button {
+  width: 100%;
+  background: -webkit-linear-gradient(150deg, var(--color1), var(--color2));
+  color: var(--white);
+  padding: 12px 7px;
+  margin: 1rem auto;
+  border: 0;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+#passages .link-internal.macro-button:hover {
+  outline: 1px solid var(--white);
+  outline-offset: -5px;
+}
+
+#passages .enter .link-internal.macro-button {
+  width: fit-content;
+  display: block;
+}
+
+.passage {
+  text-align: justify;
+}
+.passage h1 {
+  font-family: var(--titlefont);
+  color: var(--color1);
+  text-align: center;
+  margin: 0;
+  font-size: 2rem;
+}
+.passage h2 {
+  font-family: var(--subtitlefont);
+  color: var(--color2);
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  text-align: center;
+  margin: 0;
+}
+.passage h3 {
+  border-bottom: 1px solid var(--color2);
+  width: fit-content;
+  margin: 0.5rem auto;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 0.9rem;
+  color: var(--color3);
+  font-weight: normal;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+#ui-overlay {
+  visibility: hidden;
+  opacity: 0;
+  z-index: 100000;
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  height: 200%;
+  width: 200%;
+  background-image: linear-gradient(150deg, var(--color1), var(--color2), var(--color3));
+}
+
+#ui-overlay.open {
+  opacity: 0.5;
+  visibility: visible;
+}
+
+#ui-dialog {
+  z-index: 100100;
+  position: fixed;
+  display: none;
+  width: 90vw;
+  max-width: 500px;
+  top: 200px;
+  left: 5vw;
+  right: auto;
+  margin: 0;
+  padding: 5px;
+  border-radius: 30px 30px 0 0;
+  opacity: 0;
+  background-color: var(--white);
+}
+
+#ui-dialog.open {
+  display: block;
+  opacity: 1;
+  top: 200px !important; 
+}
+
+#ui-dialog-titlebar {
+  position: relative;
+  background-color: var(--white);
+  border-radius: 30px 30px 0 0;
+  background-image: linear-gradient(150deg, var(--color1), var(--color2), var(--color3));
+}
+
+#ui-dialog-title {
+  margin: 0;
+  padding: 1rem;
+  font-size: 1.5em;
+  text-align: center;
+  letter-spacing: 2px;
+  font-family: var(--titlefont);
+  color: var(--white);
+}
+
+#ui-dialog-close {
+  display: block;
+  color: var(--white);
+  position: absolute;
+  right: 0;
+  top: 0;
+  white-space: nowrap;
+  font-size: 120%;
+  margin: 0;
+  padding: 0;
+  width: 3.6em;
+  height: 92%;
+  background-color: transparent;
+  border: none;
+}
+
+#ui-dialog-close:hover {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--white);
+  text-shadow: 1px 1px 0px var(--color2);
+}
+
+#ui-dialog-body {
+  overflow: auto;
+  width: 100%;
+  min-width: 280px;
+  height: auto;
+  border: none;
+  line-height: 1.5;
+  padding: 0;
+  margin: 5px 0 0;
+  font-size: 1rem;
+  background-color: var(--white);
+}
+
+#ui-dialog-body.settings {
+  padding: 1rem;
+}
+
+#ui-dialog-body ul.buttons {
+  background-color: var(--white);
+  margin: 10px 0 0;
+  padding: 5px 0 0;
+  list-style: none;
+}
+
+#ui-dialog-body ul.buttons li {
+  display: block;
+  margin: 5px auto;
+  padding: 0;
+}
+
+#ui-dialog-body ul.buttons li:first-child {
+  margin: 0 auto;
+}
+
+#ui-dialog-body ul.buttons > li + li > button {
+  margin-left: 0;
+}
+
+#ui-dialog-body ul.buttons button {
+  background-image: linear-gradient(150deg, var(--color1), var(--color2), var(--color3));
+  color: var(--white);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  border: none;
+  width: 100%;
+  padding: 7px;
+}
+
+#ui-dialog-body ul.buttons button:hover {
+  outline: 1px solid var(--white);
+  outline-offset: -4px;
+}
+
+#ui-dialog-body #saves-load-auto {
+  background-image: linear-gradient(150deg, var(--color1), var(--color2), var(--color3));
+  color: var(--white);
+  border: none;
+  width: 100%;
+  padding: 7px;
+}
+
+#ui-dialog-body.saves table {
+  border-spacing: 0;
+  width: 100%;
+  text-align: center;
+  font-family: monospace;
+  padding: 10px;
+}
+
+#ui-dialog-body.saves td {
+  padding: 0.33em 0.33em;
+  color: var(--color1);
+}
+
+#ui-dialog-body.saves td:first-child {
+  min-width: 1.5em;
+  text-align: center;
+}
+
+#ui-dialog-body.saves .empty {
+  color: var(--color2);
+}
+
+#ui-dialog-body button.save {
+  background-image: linear-gradient(150deg, var(--color1), var(--color2), var(--color3));
+  border: 0;
+  color: var(--white);
+  width: 100%;
+  padding: 7px;
+}
+
+#ui-dialog-body button.save:hover {
+  outline: 1px solid var(--white);
+  outline-offset: -4px;
+}
+
+#ui-dialog-body button.delete {
+  background-image: linear-gradient(150deg, var(--color1), var(--color2), var(--color3));
+  border: 0;
+  color: var(--white);
+  width: 100%;
+  padding: 7px;
+}
+
+#ui-dialog-body button.delete:hover {
+  outline: 1px solid var(--white);
+  outline-offset: -4px;
+}
+
+#ui-dialog-body.saves > :not(:first-child) {
+  border-top: none;
+}
+
+#ui-dialog-body.saves ul.buttons li {
+  padding: 0;
+}
+
+#ui-dialog-body.saves button[id=saves-clear]:before, #ui-dialog-body.saves button[id=saves-import]:before, #ui-dialog-body.saves button[id=saves-export]:before {
+  content: "";
+}
+
+#ui-dialog-body.saves ul.buttons li:last-child {
+  float: none;
+}
+
+#ui-dialog-body.restart p {
+  background-color: var(--white);
+  color: #2a271f;
+  padding: 10px;
+  margin: 0;
+}
+
+.stat-passage .box {
+  background-image: linear-gradient(150deg, var(--color1), var(--color2), var(--color3));
+  padding: 1rem;
+  text-align: center;
+  outline: 1px solid var(--white);
+  color: var(--white);
+  outline-offset: -10px;
+  margin: 1rem 0;
+  font-size: 1rem;
+}
+.stat-passage h1 {
+  font-family: var(--titlefont);
+  font-weight: normal;
+  margin: 0;
+  letter-spacing: 1px;
+  color: var(--white);
+}
+.stat-passage h2 {
+  font-weight: normal;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0 0;
+  color: var(--white);
+}
+.stat-passage h3::before {
+  content: "✦";
+  margin-right: 1rem;
+  font-size: 0.7rem;
+  font-style: normal;
+}
+.stat-passage h3 {
+  font-family: var(--subtitlefont);
+  font-weight: normal;
+  font-style: italic;
+  color: var(--white);
+  text-align: center;
+  letter-spacing: 2px;
+  margin: 1rem 0 1rem;
+  width: 100%;
+  border: 0;
+  font-size: 1.1rem;
+}
+.stat-passage h3::after {
+  content: "✦";
+  font-size: 0.7rem;
+  margin-left: 1rem;
+  font-style: normal;
+}
+.stat-passage .facts {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+  margin: -10px 0 0;
+}
+.stat-passage .facts li::before {
+  content: "✦";
+  margin-right: 2.5px;
+  font-style: normal;
+  color: white;
+}
+.stat-passage .facts li {
+  display: inline-block;
+  margin: 0 2.5px;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+.stat-passage .box.header {
+  border-radius: 50px 50px 0 0;
+}
+.stat-passage .box.header .star {
+  font-size: 0.8rem;
+  display: inline-block;
+}
+.stat-passage .box.blank {
+  background-image: none;
+  outline: 0;
+  color: var(--black);
+}
+.stat-passage .box.blank h3 {
+  color: var(--color1);
+}
+.stat-passage .box.blank .stat-labels {
+  color: var(--black);
+}
+
+.stat-group {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.stat {
+  margin: 0.5rem auto;
+  width: 100%;
+}
+
+.stat-labels {
+  width: 100%;
+  margin: 0 auto;
+  font-family: monospace;
+  font-size: 0.9rem;
+  padding: 0 5px;
+  color: var(--white);
+  display: flex;
+  justify-content: space-between;
+}
+.stat-labels span {
+  width: 45%;
+}
+.stat-labels span:nth-child(2) {
+  width: 10%;
+  text-align: center;
+}
+.stat-labels span:nth-child(3) {
+  width: 10%;
+  text-align: right;
+  width: 45%;
+}
+
+.stat-bar-container {
+  max-width: 100%;
+  height: 20px;
+  position: relative;
+  background-color: var(--white);
+  border: 1px solid var(--color2);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 0 auto;
+}
+.stat-bar-container .stat-bar {
+  height: 100%;
+  background-image: linear-gradient(-90deg, var(--color1), var(--color2), var(--color3));
+}
+
+.passage.character-codex {
+	margin: 0;
+} 
+
+.passage.character-codex .container {
+  display: flex;
+  justify-content: center;
+}
+
+.passage.character-codex .card {
+  background-color: var(--color1);
+  padding: 1em;
+  margin: 0.5em auto;
+  outline: 1px solid var(--color2);
+  outline-offset: -0.5em;
+  min-width: 500px;
+  max-width: 600px;
+}
+
+.passage.character-codex .content {
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+    
+.passage.character-codex .content .left {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+}
+      
+.passage.character-codex .content .left .avatar{
+  background-color: var(--color3);
+  border: 1px solid var(--black);
+  outline: 5px solid var(--white);
+  outline-offset: -6px;
+  width: 8em;
+  height: 10em;
+  position: relative;
+}
+
+.passage.character-codex .content .left .avatar span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,
+    -50%);
+  font-family: var(--subtitlefont);
+  font-size: 3.5em;
+  color: var(--black);
+  margin-right: 1.5em;
+ }
+
+  
+.passage.character-codex .content .right {
+  width: 60%;
+  color: var(--white);
+  text-align: center;
+}
+
+.passage.character-codex .content .right p{
+  justify-content:right;
+}
+      
+.passage.character-codex .content .right h3 {
+  color: var(--white);
+  border: 0;
+  font-family: var(--titlefont);
+  font-size: 2em;
+  line-height: 1;
+  padding-top: 1em;
+  padding-left: 0.4em;
+}
+      
+.passage.character-codex .content .right h3::after{
+  content: "";
+  display: block;
+  width: 20%;
+  height: 1px;
+  background-color: var(--color2);
+  margin: 0.5em auto;
+  width: 100%
+
+}
+      
+.passage.character-codex .content .right ul {
+  font-family: var(--subtitlefont);
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.passage.character-codex .content .right li{
+  padding: 0 0.5em;   
+}
+
+        
+.passage.character-codex .content .right li::before {
+  margin: 0.4em;
+  margin-right: 0.3em !important; 
+  content: "✦";
+  color: var(--color3);
+}
+
+
+.passage.character-codex .stat {
+  position: relative;
+}
+
+.passage.character-codex .stat .stat-labels {
+  font-family: monospace;
+  font-size: 0.9rem;
+  padding: 5px 1em;
+  color: var(--white);
+  display: flex;
+  justify-content: left;
+}
+
+.passage.character-codex .stat .stat-labels span:nth-child(1) {
+  width: 45%;
+  text-align: left;
+}
+
+.passage.character-codex .stat .stat-labels span:nth-child(2) {
+  width: 10%;
+  text-align: center;
+}
+
+.passage.character-codex .stat .stat-labels span:nth-child(3) {
+  width: 10%;
+  text-align: right;
+  width: 45%;
+}
+
+.passage.character-codex .stat .stat-bar-container {
+  max-width: 100%;
+  height: 20px;
+  position: relative;
+  background-color: var(--white);
+  border: 1px solid var(--color2);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 0 auto;
+}
+.passage.character-codex .stat .stat-bar-container .stat-bar {
+  height: 100%;
+  background-image: linear-gradient(-90deg, var(--color1), var(--color2), var(--color3));
+}
+
+
+@media only screen and (min-width: 800px) {
+  #header-top .middle #menu-toggle:hover {
+    animation-name: rotate;
+    animation-duration: 0.3s;
+  }
+
+  .stat-passage .stat-group {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+  }
+}
+@media only screen and (min-width: 992px) {
+  header nav i:hover {
+    text-shadow: 1px 1px 0px var(--color3);
+    font-size: 110%;
+  }
+
+  #header-top {
+    justify-content: space-evenly;
+  }
+
+  #header-top .social-media {
+    display: block;
+  }
+
+  #header-top .tools {
+    display: block;
+  }
+
+  #header-body #story-menu a:hover {
+    border-bottom: 1px solid var(--color3);
+    padding-bottom: 5px;
+  }
+
+  #passages {
+    max-width: 850px;
+    margin: 0 auto;
+    background-color: var(--white);
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
+
+
+/* Simple Inventory, for SugarCube 2, by Chapel
+v3.0.0-beta1, 2022-07-25, 19f255d958852e55a8a3afcde5c53331f0d938e8 */
+ul.simple-inventory-list{
+  margin:0 auto;
+  padding:0;
+}
+.simple-inventory-listing{
+  list-style:none;
+  padding:.3rem .3rem .3rem 1rem;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr 1fr
+}
+.simple-inventory-listing>a,
+.simple-inventory-listing>span{
+  display:inline-block
+}
+.all-listing
+.simple-inventory-listing{
+  border-top:1px solid #fafafa;
+  background-color:transparent;
+}
+.drop-link{
+  color:#e33
+}
+.drop-link:active,
+.drop-link:focus,
+.drop-link:hover{
+  color:#f88;
+}
+/* End Simple Inventory */
+
+/*Click to Proceed*/
+.--macro-ctp-hidden {
+	display: none;
+}
+
+.--macro-ctp-t8n {
+	animation: macro-ctp-t8n 400ms ease-in;
+}
+
+@keyframes macro-ctp-t8n {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+/*End Click to Proceed*/

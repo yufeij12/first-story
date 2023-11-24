@@ -101,8 +101,10 @@
 </div>
 
 
-<!-- IMPORTAN! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP -->
+<!-- IMPORTANT! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP -->
 
-<span style="display: block; text-align: center;"><<link "« Return to game" $return>><</link>></span>
+<span style="display: block; text-align: center;">
+	<<link "« Return to game" $return>><</link>>
+</span>
 
 

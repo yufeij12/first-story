@@ -1,8 +1,36 @@
 :: Meet NPC {"position":"750,275","size":"100,100"}
+<<set $theme to "night-theme">>
+
 <<set $haveMetNPC to true>>
 <<notify 3s>>Relationships unlocked!<</notify>>
 
-You met the NPC
+
+You met the NPC. Unfortunately, you can't access the Relationships tab because you don't have your notebook yet...
+
+"How do I get my notebook?" You ask the NPC.
+
+The NPC looks at you strangely for a moment.
+
+"I think ?her_ hair is kind of strange looking," you hear her mutter under her breath. This is an absurd statement of course, because why on Earth would <<listbox "$hairstyle" autoselect>>
+	<<option "waist length">>
+	<<option "shoulder length">>
+	<<option "bald">>
+	<<option "Option 4">>
+	<<option "Option 5">>
+<</listbox>>, <<listbox "$hairtexture" autoselect>>
+	<<option "straight">>
+	<<option "wavy">>
+	<<option "Option 3">>
+	<<option "Option 4">>
+	<<option "Option 5">>
+<</listbox>> and <<cycle "$haircolor" autoselect>>
+	<<option "black">>
+	<<option "white">>
+	<<option "Option 3">>
+	<<option "Option 4">>
+	<<option "Option 5">>
+<</cycle>> hair be strange?
+
 
 [[OK]]
 

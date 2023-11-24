@@ -1,14 +1,21 @@
 :: StoryInit [nobr] {"position":"225,0","size":"100,100"}
 // FOR SETTING STATS THAT NEED TO BE IN PLAY AT THE START OF THE STORY
 
+//THEME
+<<set $theme to "day-theme">>
+
 
 //MAIN CHARACTER
 <<set $firstname = "Eleanor">>
 <<set $lastname = "Dashwood">>
 <<set $nickname = "Ellie">>
 
+<<set $haircolor = "black">>
+<<set $hairstyle = "short">>
+<<set $hairtexture = "straight">>
 
-//STATS
+
+//MC STATS
 <<set $kind = 50>>
 <<set $cruel = 100 - $kind>>
 <<set $shy = 50>>
@@ -24,17 +31,7 @@
 //RELATIONSHIPS
 <<set $npcLove = 50>>
 
-
-//INVENTORY
-<<newinv $inventory>>
-<<set $hasBook == false>>
-<<set $money = 0>>
-
-//ITEMS
-<<item "book" "Notebook">>
-	<<description>>\
-    	A notebook collecting details of your travels so far.\
-    <<unique>>
-<</item>>
+<<include [[InventoryInit]]>>
+<<include [[ChoiceInit]]>>
 
 

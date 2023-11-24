@@ -3,6 +3,18 @@
 <<pickup $inventory "book" 1>>
 <<notify 3s>>Notebook unlocked!<</notify>>
 
-Now that you've picked up your notebook, you can do...
+You can now access the notebook via the top menu.
+
+<<set $int to $int +5>>
+
+Your intelligence has now increased!
+
+
+[[I've been a lover of writing since youth, spending many hours scribbling into my notebook.|prol-5][$c1_2 to 1]]
+
+[[I don't really like writing, but notebooks are so useful for recording my thoughts...|prol-5][$c1_2 to 2]]
+
+[[I have a notebook? Right...totally forgot about that. Maybe I should actually use it...|prol-5][$c1_2 to 3]]
+
 
 
