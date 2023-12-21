@@ -1,4 +1,4 @@
-:: Has Book {"position":"750,525","size":"100,100"}
+:: Has Book {"position":"600,525","size":"100,100"}
 <<set $hasBook to true>>
 <<pickup $inventory "book" 1>>
 <<notify 3s>>Notebook unlocked!<</notify>>
