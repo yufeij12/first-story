@@ -1,4 +1,4 @@
-:: Meet NPC {"position":"750,275","size":"100,100"}
+:: Meet NPC {"position":"600,275","size":"100,100"}
 <<set $theme to "night-theme">>
 
 <<set $haveMetNPC to true>>

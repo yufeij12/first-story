@@ -8,7 +8,7 @@
 //ITEMS
 <<item "book" "Notebook">>
 	<<description>>\
-    	A notebook collecting details of your travels so far.\
+    	A handy notebook detailing all you have encountered during your travels.\
     <<unique>>
 <</item>>
 

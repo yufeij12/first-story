@@ -1,4 +1,4 @@
-:: Loading Page [loading-page nobr] {"position":"750,25","size":"100,100"}
+:: Loading Page [loading-page nobr] {"position":"800,25","size":"100,100"}
 <div class="main">
 
 <nav>
@@ -27,7 +27,8 @@
 </div>
 
 <nav>
-<<link "New Game" "Chapter I">><</link>>
+<<link "Testing" "Chapter I">><</link>>
+<<link "New Game" "Prologue Title">><</link>>
 <<link "Settings">><<run UI.settings();>><</link>>
 </nav>
 </div>

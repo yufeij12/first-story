@@ -1,4 +1,4 @@
-:: OK {"position":"750,400","size":"100,100"}
+:: OK {"position":"600,400","size":"100,100"}
 <<set $theme to "day-theme">>
 
 <<if $hairstyle is "bald">>

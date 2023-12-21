@@ -1,0 +1,13 @@
+:: prologue-2 {"position":"800,400","size":"100,100"}
+ohoho we so dramatic lol
+
+
+Added an optional box for these options. I like in-line stuff for when there are no choices, and then adding styling for when there are choices.
+
+<div class="choices">
+	[[Next|prologue-3]]
+    [[Another next button|prologue-3]]
+    [[And another!|prologue-3]]
+</div>
+
+
